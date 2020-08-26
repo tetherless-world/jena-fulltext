@@ -18,7 +18,11 @@
 
 package edu.rpi.tw.jena.query.fulltext ;
 
-import org.apache.jena.atlas.junit.BaseTest ;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
+//import org.apache.jena.
+//import org.apache.jena.atlas.junit.BaseTest ;
 import org.apache.jena.atlas.lib.StrUtils ;
 import org.apache.jena.query.* ;
 import org.apache.jena.rdf.model.Model ;
@@ -35,7 +39,7 @@ import edu.rpi.tw.jena.query.fulltext.TextIndexConfig;
 import edu.rpi.tw.jena.query.fulltext.TextQuery;
 
 /** Test the examples of building a test dataset */
-public class TestBuildTextDataset extends BaseTest
+public class TestBuildTextDataset
 {
     static final String DIR = "testing/TextQuery" ;
 
