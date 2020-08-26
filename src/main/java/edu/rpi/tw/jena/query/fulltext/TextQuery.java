@@ -63,7 +63,7 @@ public class TextQuery
             SystemInfo sysInfo = new SystemInfo(IRI, PATH, VERSION, BUILD_DATE) ;
             SystemARQ.registerSubSystem(sysInfo) ;
             
-            PropertyFunctionRegistry.get().put("http://jena.apache.org/text#query", new PropertyFunctionFactory() {
+            PropertyFunctionRegistry.get().put("http://jena.apache.org/text#search", new PropertyFunctionFactory() {
                 @Override
                 public PropertyFunction create(String uri) {
                     return new TextQueryPF() ;

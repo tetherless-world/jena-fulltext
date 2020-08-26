@@ -78,23 +78,17 @@ public class TestDatasetWithLocalizedAnalyzer extends AbstractTestDatasetWithTex
                     "    a text:TextIndexLucene ;",
                     "    text:directory <file:" + INDEX_PATH + "> ;",
                     "    text:entityMap :entMap ;",
+                    "           text:analyzer [ ",
+                    "               a text:LocalizedAnalyzer ;",
+                    "               text:language \"en\" ",
+                    "           ];",
                     "    .",
                     "",
                     ":entMap",
                     "    a text:EntityMap ;",
                     "    text:entityField      \"uri\" ;",
-                    "    text:defaultField     \"label\" ;",
-                    "    text:map (",
-                    "         [ text:field \"label\" ; ",
-                    "           text:predicate rdfs:label ;",
-                    "           text:analyzer [ ",
-                    "               a text:LocalizedAnalyzer ;",
-                    "               text:language \"en\" ",
-                    "           ]",
-                    "         ]",
-                    "         [ text:field \"label\" ; text:predicate rdfs:label ]",
-                    "         [ text:field \"comment\" ; text:predicate rdfs:comment ]",
-                    "         ) ."
+                    "    text:defaultField     \"text\" ;",
+                    "    ."
                     );
     }      
     
@@ -138,7 +132,7 @@ public class TestDatasetWithLocalizedAnalyzer extends AbstractTestDatasetWithTex
                 QUERY_PROLOG,
                 "SELECT ?s",
                 "WHERE {",
-                "    ?s text:query ( rdfs:label 'books' 10 ) .",
+                "    ?label text:search (  'books' 10 ) . ?s rdfs:label ?label.",
                 "}"
                 );
         Set<String> expectedURIs = new HashSet<>() ;

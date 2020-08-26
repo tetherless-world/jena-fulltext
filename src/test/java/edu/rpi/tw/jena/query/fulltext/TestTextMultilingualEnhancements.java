@@ -126,13 +126,10 @@ public class TestTextMultilingualEnhancements extends AbstractTestDatasetWithTex
                     ":entMap",
                     "    a text:EntityMap ;",
                     "    text:entityField      \"uri\" ;",
-                    "    text:defaultField     \"label\" ;",
+                    "    text:defaultField     \"text\" ;",
                     "    text:langField        \"lang\" ;",
                     "    text:graphField       \"graph\" ;",
-                    "    text:map (",
-                    "         [ text:field \"label\" ; text:predicate rdfs:label ; text:noIndex true ]",
-                    "         [ text:field \"comment\" ; text:predicate rdfs:comment ]",
-                    "         ) ."
+                    "  ."
                     );
     }
 
@@ -204,7 +201,7 @@ public class TestTextMultilingualEnhancements extends AbstractTestDatasetWithTex
                 QUERY_PROLOG,
                 "SELECT ?s ?lit",
                 "WHERE {",
-                "  (?s ?sc ?lit ?g) text:query ( \"green\"@en-02 ) . ",
+                "  graph ?g { ?lit text:search 'green'@en-02 . ?s ?p ?lit.  } ",
                 "}"
                 );
         Set<String> expectedURIs = new HashSet<>() ;
@@ -235,7 +232,7 @@ public class TestTextMultilingualEnhancements extends AbstractTestDatasetWithTex
                 QUERY_PROLOG,
                 "SELECT ?s ?lit",
                 "WHERE {",
-                "  (?s ?sc ?lit ?g) text:query ( \"flower\"@en-01 ) . ",
+                "  graph ?g { (?lit ?sc ) text:search ( \"flower\"@en-01 ) . ?s ?p ?lit.  }",
                 "}"
                 );
         Set<String> expectedURIs = new HashSet<>() ;
@@ -264,7 +261,7 @@ public class TestTextMultilingualEnhancements extends AbstractTestDatasetWithTex
                 QUERY_PROLOG,
                 "SELECT ?s ?lit",
                 "WHERE {",
-                "  (?s ?sc ?lit ?g) text:query ( \"green\"@en-03 ) . ",
+                "  graph ?g { (?lit ?sc ) text:search ( \"green\"@en-03 ) . ?s ?p ?lit. }",
                 "}"
                 );
         Set<String> expectedURIs = new HashSet<>() ;
@@ -293,7 +290,7 @@ public class TestTextMultilingualEnhancements extends AbstractTestDatasetWithTex
                 QUERY_PROLOG,
                 "SELECT ?s ?lit",
                 "WHERE {",
-                "  (?s ?sc ?lit ?g) text:query ( \"green\"@en-aux ) . ",
+                "  graph ?g { (?lit ?sc ) text:search ( \"green\"@en-aux ) . ?s ?p ?lit. }",
                 "}"
                 );
         Set<String> expectedURIs = new HashSet<>() ;

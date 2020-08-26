@@ -117,7 +117,7 @@ public class TestDatasetWithLuceneTextIndexWithLangField extends AbstractTestDat
                 QUERY_PROLOG,
                 "SELECT ?s",
                 "WHERE {",
-                "    ?s text:query ( rdfs:label 'paris' 'lang:en' 10 ) .",
+                "    ?label text:search ( 'paris' 'lang:en' 10 ) . ?s rdfs:label ?label. ",
                 "}"
         );
         Set<String> expectedURIs = new HashSet<>() ;
@@ -145,7 +145,7 @@ public class TestDatasetWithLuceneTextIndexWithLangField extends AbstractTestDat
                 QUERY_PROLOG,
                 "SELECT ?s",
                 "WHERE {",
-                "    ?s text:query ( rdfs:label 'paris' 'lang:it' 10 ) .",
+                "    ?label text:search (  'paris' 'lang:it' 10 ) . ?s rdfs:label ?label. ",
                 "}"
         );
         Set<String> expectedURIs = new HashSet<>() ;

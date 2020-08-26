@@ -51,7 +51,7 @@ public class TestDatasetWithComplexPhraseQueryParser extends AbstractTestDataset
                 QUERY_PROLOG,
                 "SELECT ?s",
                 "WHERE {",
-                "    ?s text:query ( rdfs:label 'scondar~ edcation~' 10 ) .",
+                "    ?label text:search (  'scondar~ edcation~' 10 ) . ?s rdfs:label ?label. ",
                 "}"
                 );
         Set<String> expectedURIs = Sets.newHashSet(RESOURCE_BASE + testName);

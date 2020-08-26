@@ -59,8 +59,7 @@ public class JenaTextExample1
 
         // Define the index mapping 
         EntityDefinition entDef = new EntityDefinition("uri", "text");
-        entDef.setPrimaryPredicate(RDFS.label.asNode());
-
+        
         // Lucene, in memory.
         Directory dir =  new ByteBuffersDirectory();
         
@@ -107,7 +106,7 @@ public class JenaTextExample1
         
         String qs = StrUtils.strjoinNL
             ( "SELECT * "
-            , " { ?s text:query (rdfs:label 'X1') ;"
+            , " { ?s text:search (rdfs:label 'X1') ;"
             , "      rdfs:label ?label"
             , " }") ; 
         

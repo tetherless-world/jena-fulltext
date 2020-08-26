@@ -27,14 +27,12 @@ public class TextHit
     private float score;
     private Node literal;
     private Node graph;
-    private Node prop;
 
     public TextHit(Node node, float score, Node literal) {
         this.node = node;
         this.score = score;
         this.literal = literal;
         this.graph = null;
-        this.prop = null;
     }
 
     public TextHit(Node node, float score, Node literal, Node graph) {
@@ -42,15 +40,6 @@ public class TextHit
         this.score = score;
         this.literal = literal;
         this.graph = graph;
-        this.prop = null;
-    }
-
-    public TextHit(Node node, float score, Node literal, Node graph, Node prop) {
-        this.node = node;
-        this.score = score;
-        this.literal = literal;
-        this.graph = graph;
-        this.prop = prop;
     }
 
     public Node getNode() {
@@ -69,12 +58,8 @@ public class TextHit
         return this.graph;
     }
 
-    public Node getProp() {
-        return this.prop;
-    }
-    
     @Override
     public String toString() {
-        return "TextHit{node="+node+" literal="+literal+" score="+score+" graph="+graph+" prop="+prop+"}";
+        return "TextHit{node="+node+" literal="+literal+" score="+score+" graph="+graph+" }";
     }
 }

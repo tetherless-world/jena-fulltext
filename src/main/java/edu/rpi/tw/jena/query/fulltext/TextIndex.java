@@ -47,20 +47,12 @@ public interface TextIndex extends Closeable //, Transactional
     /** Access the index - limit if -1 for as many as possible 
      * Throw QueryParseException for syntax errors in the query string.
      */ 
-    List<TextHit> query(Node property, String qs, String graphURI, String lang, int limit) ;
+    List<TextHit> query(String qs, String graphURI, String lang, int limit) ;
     
-    List<TextHit> query(Node property, String qs, String graphURI, String lang) ;
-
-    List<TextHit> query(Node property, String qs, String graphURI, String lang, int limit, String highlight) ;
-
-    List<TextHit> query(List<Resource> props, String qs, String graphURI, String lang, int limit, String highlight) ;
+    List<TextHit> query(String qs, String graphURI, String lang) ;
     
-    List<TextHit> query(String subjectUri, List<Resource> props, String qs, String graphURI, String lang, int limit, String highlight);
-    
-    List<TextHit> query(Node subj, List<Resource> props, String qs, String graphURI, String lang, int limit, String highlight);
-
-    default List<TextHit> query(String subjectUri, Node property, String qs, String graphURI, String lang, int limit, String highlight){
-        return query(property, qs, graphURI, lang, limit, highlight);
+    default List<TextHit> query(String qs, String graphURI, String lang, int limit, String highlight) {
+        return query(qs, graphURI, lang, limit, highlight);
     }
 
     EntityDefinition getDocDef() ;

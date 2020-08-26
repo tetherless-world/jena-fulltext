@@ -106,20 +106,6 @@ public class TestTextMultilingualEnhancements02 extends AbstractTestDatasetWithT
                     "    text:entityMap spec:entMap ;",
                     "    text:multilingualSupport true ;", 
                     "    text:ignoreIndexErrors true ;", 
-                    "    text:propLists (",
-                    "      [ text:propListProp spec:labels ;",
-                    "        text:props ( skos:prefLabel ",
-                    "                     skos:altLabel ",
-                    "                     rdfs:label ) ;",
-                    "      ]",
-                    "      [ text:propListProp spec:workStmts ;",
-                    "        text:props ( rdfs:comment ",
-                    "                     spec:workColophon ",
-                    "                     spec:workAuthorshipStatement ",
-                    "                     spec:workEditionStatement ) ;",
-                    "      ]",
-                    "    )",                    
-                    "    ;",
                     "    text:defineAnalyzers (",
                     "      [ text:defineAnalyzer spec:folding ;",
                     "        text:analyzer [",
@@ -159,18 +145,10 @@ public class TestTextMultilingualEnhancements02 extends AbstractTestDatasetWithT
                     "spec:entMap",
                     "    a text:EntityMap ;",
                     "    text:entityField      \"uri\" ;",
-                    "    text:defaultField     \"label\" ;",
+                    "    text:defaultField     \"text\" ;",
                     "    text:langField        \"lang\" ;",
                     "    text:graphField       \"graph\" ;",
-                    "    text:map (",
-                    "         [ text:field \"label\" ; text:predicate rdfs:label ; text:noIndex true ]",
-                    "         [ text:field \"altLabel\" ; text:predicate skos:altLabel ]",
-                    "         [ text:field \"prefLabel\" ; text:predicate skos:prefLabel ]",
-                    "         [ text:field \"comment\" ; text:predicate rdfs:comment ]",
-                    "         [ text:field \"workAuthorshipStatement\" ; text:predicate spec:workAuthorshipStatement ]",
-                    "         [ text:field \"workEditionStatement\" ; text:predicate spec:workEditionStatement ]",
-                    "         [ text:field \"workColophon\" ; text:predicate spec:workColophon ]",
-                    "         ) ."
+                    "    ."
                     );
     }
 
@@ -242,7 +220,7 @@ public class TestTextMultilingualEnhancements02 extends AbstractTestDatasetWithT
                 QUERY_PROLOG2,
                 "SELECT ?s ?lit",
                 "WHERE {",
-                "  (?s ?sc ?lit ?g) text:query ( spec:labels \"green\"@en-02 ) . ",
+                "   ?lit text:search (  \"green\"@en-02 ) . ?s ?p ?lit. ",
                 "}"
                 );
         Set<String> expectedURIs = new HashSet<>() ;
@@ -273,7 +251,7 @@ public class TestTextMultilingualEnhancements02 extends AbstractTestDatasetWithT
                 QUERY_PROLOG2,
                 "SELECT ?s ?lit",
                 "WHERE {",
-                "  (?s ?sc ?lit ?g) text:query ( spec:labels \"flower\"@en-01 ) . ",
+                "  ?lit text:search (  \"flower\"@en-01 ) . ?s ?p ?lit. ",
                 "}"
                 );
         Set<String> expectedURIs = new HashSet<>() ;
@@ -302,7 +280,7 @@ public class TestTextMultilingualEnhancements02 extends AbstractTestDatasetWithT
                 QUERY_PROLOG2,
                 "SELECT ?s ?lit",
                 "WHERE {",
-                "  (?s ?sc ?lit ?g) text:query ( spec:labels \"green\"@en-03 ) . ",
+                "  ?lit text:search (  \"green\"@en-03 ) . ?s ?p ?lit. ",
                 "}"
                 );
         Set<String> expectedURIs = new HashSet<>() ;
@@ -331,7 +309,8 @@ public class TestTextMultilingualEnhancements02 extends AbstractTestDatasetWithT
                 QUERY_PROLOG2,
                 "SELECT ?s ?lit",
                 "WHERE {",
-                "  (?s ?sc ?lit ?g) text:query ( spec:labels \"green\"@en-aux ) . ",
+                "  ?lit text:search (  \"green\"@en-aux ) . ",
+                "  ?s ?p ?lit. ",
                 "}"
                 );
         Set<String> expectedURIs = new HashSet<>() ;

@@ -124,32 +124,18 @@ public class DatasetGraphText extends DatasetGraphMonitor implements Transaction
 
     /** Search the text index on the default text field */
     public Iterator<TextHit> search(String queryString) {
-        return search(queryString, null) ;
-    }
-
-    /** Search the text index on the text field associated with the predicate */
-    public Iterator<TextHit> search(String queryString, Node predicate) {
-        return search(queryString, predicate, -1) ;
+        return search(queryString, -1) ;
     }
 
     /** Search the text index on the default text field */
     public Iterator<TextHit> search(String queryString, int limit) {
-        return search(queryString, null, limit) ;
-    }
-
-    /** Search the text index on the text field associated with the predicate */
-    public Iterator<TextHit> search(String queryString, Node predicate, int limit) {
-        return search(queryString, predicate, null, null, limit) ;
+        return search(queryString, limit) ;
     }
 
     /** Search the text index on the text field associated with the predicate within graph */
-    public Iterator<TextHit> search(String queryString, Node predicate, String graphURI, String lang, int limit) {
+    public Iterator<TextHit> search(String queryString, String graphURI, String lang, int limit) {
         queryString = QueryParserBase.escape(queryString) ;
-        if ( predicate != null ) {
-            String f = textIndex.getDocDef().getField(predicate) ;
-            queryString = f + ":" + queryString ;
-        }
-        List<TextHit> results = textIndex.query(predicate, queryString, graphURI, lang, limit) ;
+        List<TextHit> results = textIndex.query(queryString, graphURI, lang, limit) ;
         return results.iterator() ;
     }
 

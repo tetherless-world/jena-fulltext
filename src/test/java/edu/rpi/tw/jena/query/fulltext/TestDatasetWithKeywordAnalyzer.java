@@ -49,7 +49,7 @@ public class TestDatasetWithKeywordAnalyzer extends AbstractTestDatasetWithAnaly
                 QUERY_PROLOG,
                 "SELECT ?s",
                 "WHERE {",
-                "    ?s text:query ( rdfs:label 'EC1V' 10 ) .",
+                "    ?label text:search (  'EC1V' 10 ) . ?s rdfs:label ?label. ",
                 "}"
                 );
         Set<String> expectedURIs = new HashSet<>() ;
@@ -69,7 +69,7 @@ public class TestDatasetWithKeywordAnalyzer extends AbstractTestDatasetWithAnaly
                 QUERY_PROLOG,
                 "SELECT ?s",
                 "WHERE {",
-                "    ?s text:query ( rdfs:label '\"EC2V 9BE\"' 10 ) .",
+                "    ?label text:search (  '\"EC2V 9BE\"' 10 ) . ?s rdfs:label ?label. ",
                 "}"
                 );
         Set<String> expectedURIs = new HashSet<>() ;

@@ -33,17 +33,12 @@ import org.apache.lucene.analysis.Analyzer ;
  * Definition of a "document"
  */
 public class EntityDefinition {
-    private final Map<Node, String>          predicateToField = new HashMap<>() ;
-    private final Map<String, Analyzer>      fieldToAnalyzer  = new HashMap<>() ;
-    private final ListMultimap<String, Node> fieldToPredicate = ArrayListMultimap.create() ;
-    private final Map<String, Boolean>       fieldToNoIndex   = new HashMap<>() ;
-    private final Collection<String>         fields           = Collections.unmodifiableCollection(fieldToPredicate.keys()) ;
     // private final Collection<String> fields =
     // Collections.unmodifiableCollection(fieldToPredicate.keySet()) ;
     private final String                     entityField ;
     private final String                     primaryField ;
     private String                           graphField = null ;
-    private String                           langField ;
+    private String                           langField ="lang";
     private String                           uidField ;
 
     private boolean                          cacheQueries;
@@ -72,100 +67,14 @@ public class EntityDefinition {
         setGraphField(graphField);
     }
 
-    /**
-     * @param entityField
-     *            The entity being indexed (e.g. it's URI).
-     * @param primaryField
-     *            The primary/default field to search
-     * @param primaryPredicate
-     *            The property associated with the primary/default field
-     */
-    public EntityDefinition(String entityField, String primaryField, Resource primaryPredicate) {
-        this(entityField, primaryField) ;
-        setPrimaryPredicate(primaryPredicate);
-    }
 
-    /**
-     * @param entityField
-     *            The entity being indexed (e.g. it's URI).
-     * @param primaryField
-     *            The primary/default field to search
-     * @param primaryPredicate
-     *            The property associated with the primary/default field
-     */
-    public EntityDefinition(String entityField, String primaryField, Node primaryPredicate) {
-        this(entityField, primaryField) ;
-        setPrimaryPredicate(primaryPredicate);
-    }
-
-    /**
-     * @param entityField
-     *            The entity being indexed (e.g. it's URI).
-     * @param primaryField
-     *            The primary/default field to search
-     * @param graphField
-     *            The field that stores graph URI, or null
-     * @param primaryPredicate
-     *            The property associated with the primary/default field
-     */
-    public EntityDefinition(String entityField, String primaryField, String graphField, Node primaryPredicate) {
-        this(entityField, primaryField) ;
-        setGraphField(graphField);
-        setPrimaryPredicate(primaryPredicate) ;
-    }
-    
     public String getEntityField() {
         return entityField ;
     }
 
-    public void setPrimaryPredicate(Resource primaryPredicate) {
-        setPrimaryPredicate(primaryPredicate.asNode());
-    }
-
-    public void setPrimaryPredicate(Node primaryPredicate) {
-        set(primaryField, primaryPredicate) ;
-    }
-
-    public void set(String field, Node predicate) {
-        predicateToField.put(predicate, field) ;
-        // Add uniquely.
-        Collection<Node> c = fieldToPredicate.get(field) ;
-        if (c == null || !c.contains(predicate))
-            fieldToPredicate.put(field, predicate) ;
-    }
-
-    public Collection<Node> getPredicates(String field) {
-        return fieldToPredicate.get(field) ;
-    }
-
-    public String getField(Node predicate) {
-        return predicateToField.get(predicate) ;
-    }
-    
-    public void setAnalyzer(String field, Analyzer analyzer) {
-        fieldToAnalyzer.put(field, analyzer);
-    }
-    
-    public Analyzer getAnalyzer(String field) {
-        return fieldToAnalyzer.get(field);
-    }
-    
-    public void setNoIndex(String field, boolean b) {
-        fieldToNoIndex.put(field, b);
-    }
-    
-    public boolean getNoIndex(String field) {
-        Boolean b = fieldToNoIndex.get(field);
-        return b != null ? b : false;
-    }
 
     public String getPrimaryField() {
         return primaryField ;
-    }
-
-    public Node getPrimaryPredicate() {
-        Collection<Node> c = fieldToPredicate.get(getPrimaryField()) ;
-        return getOne(c) ;
     }
 
     public String getGraphField() {
@@ -192,10 +101,6 @@ public class EntityDefinition {
         this.uidField = uidField;
     }
 
-    public Collection<String> fields() {
-        return fields ;
-    }
-    
     private static <T> T getOne(Collection<T> collection) {
         if ( collection.size() != 1 )
             return null ;
@@ -212,7 +117,7 @@ public class EntityDefinition {
     
     @Override
     public String toString() {
-        return entityField+":"+predicateToField ;
+        return entityField ;
         
     }
 }

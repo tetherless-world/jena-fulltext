@@ -77,20 +77,14 @@ public class TestDatasetWithStandardAnalyzer extends AbstractTestDatasetWithText
                     ":indexLucene",
                     "    a text:TextIndexLucene ;",
                     "    text:directory <file:" + INDEX_PATH + "> ;",
+                    "    text:analyzer [ a text:StandardAnalyzer ; text:stopWords ( 'foo'  'bar' ) ];",
                     "    text:entityMap :entMap ;",
                     "    .",
                     "",
                     ":entMap",
                     "    a text:EntityMap ;",
                     "    text:entityField      \"uri\" ;",
-                    "    text:defaultField     \"label\" ;",
-                    "    text:map (",
-                    "         [ text:field \"label\" ; ",
-                    "           text:predicate rdfs:label ;",
-                    "           text:analyzer [ a text:StandardAnalyzer ; text:stopWords ( 'foo'  'bar' ) ]",
-                    "         ]",
-                    "         [ text:field \"comment\" ; text:predicate rdfs:comment ]",
-                    "         ) ."
+                    "    text:defaultField     \"text\" ;. "
                     );
     }      
     
@@ -134,7 +128,7 @@ public class TestDatasetWithStandardAnalyzer extends AbstractTestDatasetWithText
                 QUERY_PROLOG,
                 "SELECT ?s",
                 "WHERE {",
-                "    ?s text:query ( rdfs:label 'the' 10 ) .",
+                "    ?label text:search (  'the' 10 ) . ?s rdfs:label ?label. ",
                 "}"
                 );
         Set<String> expectedURIs = new HashSet<>() ;
@@ -155,7 +149,7 @@ public class TestDatasetWithStandardAnalyzer extends AbstractTestDatasetWithText
                 QUERY_PROLOG,
                 "SELECT ?s",
                 "WHERE {",
-                "    ?s text:query ( rdfs:label 'foo' 10 ) .",
+                "    ?label text:search (  'foo' 10 ) . ?s rdfs:label ?label. ",
                 "}"
                 );
         Set<String> expectedURIs = new HashSet<>() ;

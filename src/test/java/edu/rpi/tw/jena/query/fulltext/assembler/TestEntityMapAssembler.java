@@ -80,58 +80,6 @@ public class TestEntityMapAssembler {
         assertEquals(SPEC1_ENTITY_FIELD, entityDef.getEntityField());        
     }
     
-    @Test public void EntityHasMapEntries() {
-        EntityDefinitionAssembler entDefAssem = new EntityDefinitionAssembler();
-        EntityDefinition entityDef = entDefAssem.open(null, spec1, null);
-        assertEquals(SPEC1_PREDICATE.asNode(), getOne(entityDef,SPEC1_DEFAULT_FIELD));
-    }
-    
-    private static Object getOne(EntityDefinition entityDef, String field) {
-        Collection<Node> x = entityDef.getPredicates(field) ;
-        if ( x == null || x.size() == 0 )
-            return null ;
-        if ( x.size() != 1 )
-            throw new InternalErrorException("Not unique: "+field) ;
-        return x.iterator().next() ; 
-    }
-
-    @Test public void EntityHasMultipleMapEntries() {
-        EntityDefinitionAssembler entDefAssem = new EntityDefinitionAssembler();
-        EntityDefinition entityDef = entDefAssem.open(null, spec2, null);
-        assertEquals(SPEC2_PREDICATE1.asNode(), getOne(entityDef,SPEC2_DEFAULT_FIELD));
-        assertEquals(SPEC2_PREDICATE2.asNode(), getOne(entityDef, SPEC2_FIELD2));
-    }
-    
-    @Test public void EntityHasMapEntryWithSimpleAnalyzer() {
-        EntityDefinitionAssembler entDefAssem = new EntityDefinitionAssembler();
-        EntityDefinition entityDef = entDefAssem.open(Assembler.general, spec3,  null);
-        assertEquals(SimpleAnalyzer.class, entityDef.getAnalyzer(SPEC1_DEFAULT_FIELD).getClass());
-    }
-    
-    @Test public void EntityHasMapEntryWithStandardAnalyzerAndStopWords() {
-        EntityDefinitionAssembler entDefAssem = new EntityDefinitionAssembler();
-        EntityDefinition entityDef = entDefAssem.open(Assembler.general, spec4,  null);
-        assertEquals(StandardAnalyzer.class, entityDef.getAnalyzer(SPEC1_DEFAULT_FIELD).getClass());
-    }
-    
-    @Test public void EntityHasMapEntryWithKeywordAnalyzer() {
-        EntityDefinitionAssembler entDefAssem = new EntityDefinitionAssembler();
-        EntityDefinition entityDef = entDefAssem.open(Assembler.general, spec5,  null);
-        assertEquals(KeywordAnalyzer.class, entityDef.getAnalyzer(SPEC1_DEFAULT_FIELD).getClass());
-    }    
-    
-    @Test public void EntityHasMapEntryWithLowerCaseKeywordAnalyzer() {
-        EntityDefinitionAssembler entDefAssem = new EntityDefinitionAssembler();
-        EntityDefinition entityDef = entDefAssem.open(Assembler.general, spec6,  null);
-        assertEquals(LowerCaseKeywordAnalyzer.class, entityDef.getAnalyzer(SPEC1_DEFAULT_FIELD).getClass());
-    }    
-    
-    @Test public void EntityHasMapEntryWithConfigurableAnalyzer() {
-        EntityDefinitionAssembler entDefAssem = new EntityDefinitionAssembler();
-        EntityDefinition entityDef = entDefAssem.open(Assembler.general, spec7,  null);
-        assertEquals(ConfigurableAnalyzer.class, entityDef.getAnalyzer(SPEC1_DEFAULT_FIELD).getClass());
-    }    
-    
     @Test(expected=TextIndexException.class) public void errorOnNoEntityField() {
         EntityDefinitionAssembler entDefAssem = new EntityDefinitionAssembler();
         entDefAssem.open(null, specNoEntityField, null);
@@ -140,22 +88,6 @@ public class TestEntityMapAssembler {
     @Test(expected=TextIndexException.class) public void errorOnNoDefaultField() {
         EntityDefinitionAssembler entDefAssem = new EntityDefinitionAssembler();
         entDefAssem.open(null, specNoDefaultField, null);
-    }
-    
-    @Test(expected=TextIndexException.class) public void errorOnNoMapProperty() {
-        EntityDefinitionAssembler entDefAssem = new EntityDefinitionAssembler();
-        entDefAssem.open(null, specNoMapProperty, null);
-    }
-    
-    @Test(expected=TextIndexException.class) public void errorOnNoPrimaryFieldDef() {
-        EntityDefinitionAssembler entDefAssem = new EntityDefinitionAssembler();
-        try {
-            entDefAssem.open(null, specNoPrimaryFieldDef, null);
-        } catch (TextIndexException e) {
-            assertTrue(e.getMessage().contains(SPEC1_DEFAULT_FIELD));
-            throw e ;
-        }    
-        
     }
     
     private static final String SPEC1_ENTITY_FIELD = "spec1EntityField";

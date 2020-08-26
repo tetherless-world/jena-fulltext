@@ -71,12 +71,10 @@ public class TextQueryFuncs {
      * Returns null if the quad is not a candidate for indexing.
      */
     public static Entity entityFromQuad(EntityDefinition defn , Node g , Node s , Node p , Node o ) {
-        String field = defn.getField(p) ;
+        String field = defn.getPrimaryField() ;
         if ( field == null )
             return null ;
         if ( !o.isLiteral() ) {
-            Log.warn(TextQuery.class, "Not a literal value for mapped field-predicate: " + field + " :: "
-                     + FmtUtils.stringForString(field)) ;
             return null ;
         }
         String x = TextQueryFuncs.subjectToString(s) ;

@@ -51,7 +51,7 @@ public class TestDatasetWithSurroundQueryParser extends AbstractTestDatasetWithA
                 QUERY_PROLOG,
                 "SELECT ?s",
                 "WHERE {",
-                "    ?s text:query ( rdfs:label '5W(contribution, jena)' 10 ) .",
+                "    ?label text:search (  '5W(contribution, jena)' 10 ) . ?s rdfs:label ?label. ",
                 "}"
                 );
         Set<String> expectedURIs = Sets.newHashSet(RESOURCE_BASE + testName);

@@ -62,7 +62,6 @@ public class EntityDefinitionAssembler extends AssemblerBase implements Assemble
         String qs1 = StrUtils.strjoinNL(prologue,
                                         "SELECT * {" ,
                                         "  ?eMap  :entityField  ?entityField ;" ,
-                                        "         :map ?map ;",
                                         "         :defaultField ?dftField ." ,
                                         "  OPTIONAL {" ,
                                         "    ?eMap :graphField ?graphField" ,
@@ -92,103 +91,17 @@ public class EntityDefinitionAssembler extends AssemblerBase implements Assemble
         }
 
         QuerySolution qsol1 = results.get(0) ;
-        String entityField = qsol1.getLiteral("entityField").getLexicalForm() ;
-        String graphField = qsol1.contains("graphField") ? qsol1.getLiteral("graphField").getLexicalForm() : null;
-        String langField = qsol1.contains("langField") ? qsol1.getLiteral("langField").getLexicalForm() : null;
+        String entityField = qsol1.contains("entityField") ? qsol1.getLiteral("entityField").getLexicalForm() : "uri" ;
+        String graphField = qsol1.contains("graphField") ? qsol1.getLiteral("graphField").getLexicalForm() : "graph";
+        String langField = qsol1.contains("langField") ? qsol1.getLiteral("langField").getLexicalForm() : "lang";
         String defaultField = qsol1.contains("dftField") ? qsol1.getLiteral("dftField").getLexicalForm() : null ;
         String uniqueIdField = qsol1.contains("uidField") ? qsol1.getLiteral("uidField").getLexicalForm() : null;
 
-        Multimap<String, Node> mapDefs = HashMultimap.create() ; 
-        Map<String, Analyzer> analyzerDefs = new HashMap<>();
-        Map<String, Boolean> noIndexDefs = new HashMap<>();
-
-        Statement listStmt = root.getProperty(TextVocab.pMap);
-        while (listStmt != null) {
-            RDFNode n = listStmt.getObject();
-            if (! n.isResource()) {
-                throw new TextIndexException("Text list node is not a resource : " + n);
-            }
-            Resource listResource = n.asResource();
-            if (listResource.equals(RDF.nil)) {
-                break;  // end of the list
-            }
-
-            Statement listEntryStmt = listResource.getProperty(RDF.first);
-            if (listEntryStmt == null) {
-                throw new TextIndexException("Text map list is not well formed.  No rdf:first property");
-            }
-            n = listEntryStmt.getObject();
-            if (! n.isResource()) {
-                throw new TextIndexException("Text map list entry is not a resource : " + n);
-            }
-            Resource listEntry = n.asResource();
-
-            Statement fieldStatement = listEntry.getProperty(TextVocab.pField);
-            if (fieldStatement == null) {
-                throw new TextIndexException("Text map entry has no field property");
-            }
-            n = fieldStatement.getObject();
-            if (! n.isLiteral()) {
-                throw new TextIndexException("Text map entry field property has no literal value : " + n);
-            }
-            String field = n.asLiteral().getLexicalForm();
-
-            Statement predicateStatement = listEntry.getProperty(TextVocab.pPredicate);
-            if (predicateStatement == null) {
-                throw new TextIndexException("Text map entry has no predicate property");
-            }
-            n = predicateStatement.getObject();
-            if (! n.isURIResource()) {
-                throw new TextIndexException("Text map entry predicate property has non resource value : " + n);
-            }
-            mapDefs.put(field, n.asNode()) ;
-
-            Statement noIndexStatement = listEntry.getProperty(TextVocab.pNoIndex);
-            if (noIndexStatement != null) {
-                n = noIndexStatement.getObject();
-                if (! n.isLiteral()) {
-                    throw new TextIndexException("Text map entry noIndex property must be a boolean : " + n);
-                }
-                boolean noInx = n.asLiteral().getBoolean();
-                noIndexDefs.put(field, noInx) ;
-            }
-
-            Statement analyzerStatement = listEntry.getProperty(TextVocab.pAnalyzer);
-            if (analyzerStatement != null) {
-                n = analyzerStatement.getObject();
-                if (! n.isResource()) {
-                    throw new TextIndexException("Text map entry analyzer property is not a resource : " + n);
-                }
-                Resource analyzerResource = n.asResource();
-                Analyzer analyzer = (Analyzer) a.open(analyzerResource);
-                analyzerDefs.put(field, analyzer);
-            }
-
-            // move on to the next element in the list
-            listStmt = listResource.getProperty(RDF.rest);
-        }
-
-        // Primary field/predicate
-        if ( defaultField != null ) {
-            Collection<Node> c = mapDefs.get(defaultField) ;
-            if ( c.isEmpty() )
-                throw new TextIndexException("No definition of primary field '"+defaultField+"'") ;
-        }
 
         EntityDefinition docDef = new EntityDefinition(entityField, defaultField);
         docDef.setGraphField(graphField);
         docDef.setLangField(langField);
         docDef.setUidField(uniqueIdField);
-        for ( String f : mapDefs.keys() ) {
-            for ( Node p : mapDefs.get(f)) 
-                docDef.set(f, p) ;
-        }
-        for (String f : noIndexDefs.keySet()) {
-            docDef.setNoIndex(f, noIndexDefs.get(f));
-        }
-        for (String f : analyzerDefs.keySet()) {
-            docDef.setAnalyzer(f, analyzerDefs.get(f));
-        }
         return docDef ;
     }
 }

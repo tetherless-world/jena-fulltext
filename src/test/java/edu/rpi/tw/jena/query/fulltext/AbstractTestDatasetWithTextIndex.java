@@ -48,7 +48,7 @@ public abstract class AbstractTestDatasetWithTextIndex extends AbstractTestDatas
                 QUERY_PROLOG,
                 "SELECT ?s",
                 "WHERE {",
-                "    ?s text:query ( rdfs:label 'testOneSimpleResult' 10 ) .",
+                "    ?label text:search ( 'testOneSimpleResult' 10 ) . ?s rdfs:label ?label. ",
                 "}"
                 );
         Set<String> expectedURIs = new HashSet<>() ;
@@ -71,7 +71,7 @@ public abstract class AbstractTestDatasetWithTextIndex extends AbstractTestDatas
                 QUERY_PROLOG,
                 "SELECT ?s",
                 "WHERE {",
-                "    ?s text:query (rdfs:label  'text') .",
+                "     ?label text:search  'text' . ?s rdfs:label ?label.",
                 "}"
                 );
         Set<String> expectedURIs = new HashSet<>();
@@ -87,7 +87,7 @@ public abstract class AbstractTestDatasetWithTextIndex extends AbstractTestDatas
                 QUERY_PROLOG,
                 "SELECT ?s",
                 "WHERE {",
-                "    ?s text:query ('text') .",
+                "   ?o text:search 'text' . ?s ?p ?o. ",
                 "}"
                 );
         Set<String> expectedURIs = new HashSet<>();
@@ -104,7 +104,7 @@ public abstract class AbstractTestDatasetWithTextIndex extends AbstractTestDatas
                 QUERY_PROLOG,
                 "SELECT ?s ?score",
                 "WHERE {",
-                "    (?s ?score) text:query ('text') .",
+                "     (?o ?score) text:search 'text'. ?s ?p ?o. ",
                 "}"
                 );
 
@@ -120,8 +120,8 @@ public abstract class AbstractTestDatasetWithTextIndex extends AbstractTestDatas
                 QUERY_PROLOG,
                 "SELECT ?s",
                 "WHERE {",
-                "    ?s text:query ( rdfs:label 'text') .",
-                "    ?s rdfs:label 'text' .",
+                "    ?label text:search 'text' .",
+                "    ?s rdfs:label ?label .",
                 "}"
                 );
         Set<String> expectedURIs = new HashSet<>();
@@ -136,8 +136,8 @@ public abstract class AbstractTestDatasetWithTextIndex extends AbstractTestDatas
                 QUERY_PROLOG,
                 "SELECT ?s",
                 "WHERE {",
-                "    ?s text:query ('text') .",
-                "    ?s rdfs:label 'text' .",
+                "    ?label text:search 'text' .",
+                "    ?s rdfs:label ?label .",
                 "}"
                 );
         Set<String> expectedURIs = new HashSet<>();
@@ -153,8 +153,8 @@ public abstract class AbstractTestDatasetWithTextIndex extends AbstractTestDatas
                 QUERY_PROLOG,
                 "SELECT ?s ?score",
                 "WHERE {",
-                "    (?s ?score) text:query ('text') .",
-                "    ?s rdfs:label 'text' .",
+                "    (?label ?score) text:search 'text' .",
+                "    ?s rdfs:label ?label .",
                 "}"
                 );
 
@@ -170,8 +170,8 @@ public abstract class AbstractTestDatasetWithTextIndex extends AbstractTestDatas
                 QUERY_PROLOG,
                 "SELECT ?s",
                 "WHERE {",
-                "    ?s rdfs:label 'text' .",
-                "    ?s text:query ( rdfs:label 'text') .",
+                "    ?label text:search ('text') .",
+                "    ?s rdfs:label ?label .",
                 "}"
                 );
         Set<String> expectedURIs = new HashSet<>();
@@ -186,8 +186,8 @@ public abstract class AbstractTestDatasetWithTextIndex extends AbstractTestDatas
                 QUERY_PROLOG,
                 "SELECT ?s",
                 "WHERE {",
-                "    ?s rdfs:label 'text' .",
-                "    ?s text:query ('text') .",
+                "    ?label text:search 'text'.",
+                "    ?s rdfs:label ?label .",
                 "}"
                 );
         Set<String> expectedURIs = new HashSet<>();
@@ -203,8 +203,8 @@ public abstract class AbstractTestDatasetWithTextIndex extends AbstractTestDatas
                 QUERY_PROLOG,
                 "SELECT ?s ?score",
                 "WHERE {",
-                "    ?s rdfs:label 'text' .",
-                "    (?s ?score) text:query ('text') .",
+                "    (?label ?score) text:search 'text' .",
+                "    ?s rdfs:label ?label .",
                 "}"
                 );
 
@@ -221,7 +221,8 @@ public abstract class AbstractTestDatasetWithTextIndex extends AbstractTestDatas
                 "SELECT ?s",
                 "WHERE {",
                 "    ?s rdfs:label 'text' .",
-                "    ?s text:query ( rdfs:label 'fuzz') .",
+                "    ?label text:search 'fuzz' .",
+                "    ?s rdfs:label ?label.",
                 "}"
                 );
         Set<String> expectedURIs = new HashSet<>();
@@ -236,7 +237,7 @@ public abstract class AbstractTestDatasetWithTextIndex extends AbstractTestDatas
                 "SELECT ?s",
                 "WHERE {",
                 "    BIND('text' AS ?t)", 
-                "    ?s text:query ( rdfs:label ?t) .",
+                "    ?label text:search ?t . ?s rdfs:label ?label. ",
                 "}"
                 );
         Set<String> expectedURIs = new HashSet<>();
@@ -252,7 +253,7 @@ public abstract class AbstractTestDatasetWithTextIndex extends AbstractTestDatas
                 "SELECT ?s",
                 "WHERE {",
                 "    BIND(rdfs:label AS ?P)", 
-                "    ?s text:query ( ?P 'text') .",
+                "    ?label text:search 'text' . ?s ?P ?label. ",
                 "}"
                 );
         Set<String> expectedURIs = new HashSet<>();
@@ -269,7 +270,7 @@ public abstract class AbstractTestDatasetWithTextIndex extends AbstractTestDatas
                 "SELECT ?s",
                 "WHERE {",
                 "    BIND(1 AS ?C)", 
-                "    ?s text:query ( rdfs:label 'text' ?C) .",
+                "    ?o text:search ( 'text' ?C) . ?s ?p ?o. ",
                 "}"
                 );
         Set<String> expectedURIs = new HashSet<>();
@@ -285,7 +286,7 @@ public abstract class AbstractTestDatasetWithTextIndex extends AbstractTestDatas
                 "SELECT ?s",
                 "WHERE {",
                 "    ?s rdfs:label 'text' .",
-                "    ?s text:query 'text' .",
+                "    ?label text:search 'text' . ?s ?p ?label. ",
                 "    ?s rdfs:label 'text' .",
                 "}"
                 );
@@ -310,7 +311,7 @@ public abstract class AbstractTestDatasetWithTextIndex extends AbstractTestDatas
                 QUERY_PROLOG,
                 "SELECT ?s",
                 "WHERE {",
-                "    ?s text:query ( rdfs:label '" + label + "?' 10 ) .",
+                "    ?label text:search (  '" + label + "?' 10 ) . ?s rdfs:label ?label. ",
                 "}"
                 );
         Set<String> expectedURIs = new HashSet<>() ;
@@ -337,7 +338,7 @@ public abstract class AbstractTestDatasetWithTextIndex extends AbstractTestDatas
                 QUERY_PROLOG,
                 "SELECT ?s",
                 "WHERE {",
-                "    ?s text:query ('" + label + "?' 10 ) .",
+                "    ?o text:search ('" + label + "?' 10 ) . ?s ?p ?o. ",
                 "}"
                 );
         Set<String> expectedURIs = new HashSet<>() ;
@@ -363,7 +364,7 @@ public abstract class AbstractTestDatasetWithTextIndex extends AbstractTestDatas
                 QUERY_PROLOG,
                 "SELECT ?s ?score",
                 "WHERE {",
-                "    (?s ?score) text:query ( rdfs:label 'brown fox' 10 ) .",
+                "    (?label ?score) text:search ('brown fox' 10 ) . ?s rdfs:label ?label. ",
                 "}"
                 );
         Set<String> expectedURIs = new HashSet<>();
@@ -376,46 +377,6 @@ public abstract class AbstractTestDatasetWithTextIndex extends AbstractTestDatas
         assertTrue(scores.get(RESOURCE_BASE + "brownfox") > scores.get(RESOURCE_BASE + "redfox"));
     }
 
-    @Test
-    public void testSearchCorrectField() {
-        String label = "tscf";
-        String label2 = "tscfo";
-        final String turtle = StrUtils.strjoinNL(
-                TURTLE_PROLOG,
-                "<" + RESOURCE_BASE + label +"1>",
-                "  rdfs:label '" + label + "a' ; ",
-                "  rdfs:comment '" + label2 + "a' ;",
-                ".",
-                "<" + RESOURCE_BASE + label + "2>",
-                "  rdfs:label '" + label2 + "b' ; ",
-                "  rdfs:comment '" + label + "b' ; ",
-                "."
-                );
-        String queryStringLabel = StrUtils.strjoinNL(
-                QUERY_PROLOG,
-                "SELECT ?s",
-                "WHERE {",
-                "    ?s text:query ( rdfs:label '" + label + "?' 10 ) .",
-                "}"
-                );
-        String queryStringComment = StrUtils.strjoinNL(
-                QUERY_PROLOG,
-                "SELECT ?s",
-                "WHERE {",
-                "    ?s text:query ( rdfs:comment '" + label + "?' 10 ) .",
-                "}"
-                );
-        Set<String> expectedURIsLabel = new HashSet<>() ;
-        expectedURIsLabel.addAll( Arrays.asList(
-                "http://example.org/data/resource/" + label + "1"
-            ));
-        Set<String> expectedURIsComment = new HashSet<>() ;
-        expectedURIsComment.addAll( Arrays.asList(
-                "http://example.org/data/resource/" + label + "2"
-            ));
-        doTestSearch("label:", turtle, queryStringLabel, expectedURIsLabel);
-        doTestSearch("comment:", turtle, queryStringComment, expectedURIsComment);
-    }
 
     @Test
     public void testSearchDefaultField() {
@@ -436,7 +397,7 @@ public abstract class AbstractTestDatasetWithTextIndex extends AbstractTestDatas
                 QUERY_PROLOG,
                 "SELECT ?s",
                 "WHERE {",
-                "    ?s text:query ( rdfs:label '" + label + "?' 10 ) .",
+                "    ?label text:search ( '" + label + "?' 10 ) . ?s rdfs:label ?label. ",
                 "}"
                 );
         Set<String> expectedURIs = new HashSet<>() ;
@@ -446,34 +407,6 @@ public abstract class AbstractTestDatasetWithTextIndex extends AbstractTestDatas
         doTestSearch("default field:", turtle, queryString, expectedURIs);
     }
 
-    @Test
-    public void testSearchDefaultField_dft() {
-        String label = "testSearchDefaultField";
-        String label2 = "testSearchDefaultFieldOther";
-        final String turtle = StrUtils.strjoinNL(
-                TURTLE_PROLOG,
-                "<" + RESOURCE_BASE + label +"1>",
-                "  rdfs:label '" + label + "1' ; ",
-                "  rdfs:comment '" + label2 + "1' ;",
-                ".",
-                "<" + RESOURCE_BASE + label + "2>",
-                "  rdfs:label '" + label2 + "2' ; ",
-                "  rdfs:comment '" + label + "2' ; ",
-                "."
-                );
-        String queryString = StrUtils.strjoinNL(
-                QUERY_PROLOG,
-                "SELECT ?s",
-                "WHERE {",
-                "    ?s text:query ('" + label + "?' 10 ) .",
-                "}"
-                );
-        Set<String> expectedURIs = new HashSet<>() ;
-        expectedURIs.addAll( Arrays.asList(
-                "http://example.org/data/resource/" + label + "1"
-            ));
-        doTestSearch("default field:", turtle, queryString, expectedURIs);
-    }
 
     @Test
     public void testSearchLimitsResults() {
@@ -481,31 +414,31 @@ public abstract class AbstractTestDatasetWithTextIndex extends AbstractTestDatas
         final String turtle = StrUtils.strjoinNL(
                 TURTLE_PROLOG,
                 "<" + RESOURCE_BASE + label + "1>",
-                "  rdfs:label '" + label + "' ;",
+                "  rdfs:label '" + label + " 1' ;",
                 ".",
                 "<" + RESOURCE_BASE + label + "2>",
-                "  rdfs:label '" + label + "' ;",
+                "  rdfs:label '" + label + " 2' ;",
                 ".",
                 "<" + RESOURCE_BASE + label + "3>",
-                "  rdfs:label '" + label + "' ;",
+                "  rdfs:label '" + label + " 3' ;",
                 ".",
                 "<" + RESOURCE_BASE + label + "4>",
-                "  rdfs:label '" + label + "' ;",
+                "  rdfs:label '" + label + " 4' ;",
                 "."
                 );
         String queryString = StrUtils.strjoinNL(
                 QUERY_PROLOG,
                 "SELECT ?s",
                 "WHERE {",
-                "    ?s text:query ( '" + label + "' 3 ) .",
+                "    ?label text:search ( '" + label + "' 3 ) . ?s rdfs:label ?label. ",
                 "}"
                 );
         Set<String> expectedURIs = new HashSet<>() ;
         expectedURIs.addAll( Arrays.asList(
-                        "http://example.org/data/resource/" + label + "1",
-                        "http://example.org/data/resource/" + label + "2",
-                        "http://example.org/data/resource/" + label + "3",
-                        "http://example.org/data/resource/" + label + "4"
+                        RESOURCE_BASE + label + "1",
+                        RESOURCE_BASE + label + "2",
+                        RESOURCE_BASE + label + "3",
+                        RESOURCE_BASE + label + "4"
             ));
         doTestSearch("default field:", turtle, queryString, expectedURIs, 3 );
     }

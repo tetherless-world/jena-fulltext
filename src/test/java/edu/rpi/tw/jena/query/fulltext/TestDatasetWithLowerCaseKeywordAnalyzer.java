@@ -49,7 +49,7 @@ public class TestDatasetWithLowerCaseKeywordAnalyzer extends TestDatasetWithKeyw
                 QUERY_PROLOG,
                 "SELECT ?s",
                 "WHERE {",
-                "    ?s text:query ( rdfs:label 'f;ri*' 10 ) .",
+                "    ?label text:search (  'f;ri*' 10 ) . ?s rdfs:label ?label. ",
                 "}"
                 );
         Set<String> expectedURIs = new HashSet<>() ;

@@ -34,16 +34,6 @@ import static org.junit.Assert.* ;
 
 public class TestTextIndexLuceneAssembler extends AbstractTestTextAssembler {
     
-    @Test public void testIndexHasEntityMap() {
-        TextIndexLucene index = (TextIndexLucene) Assembler.general.open(SIMPLE_INDEX_SPEC);
-        try {
-            assertEquals(RDFS.label.asNode(), index.getDocDef().getPrimaryPredicate());
-        }
-        finally {
-            index.close();
-        }
-    }
-
     @Test public void testLiteralDirectory() {
         TextIndexLuceneAssembler assembler = new TextIndexLuceneAssembler();
         

@@ -55,7 +55,7 @@ public class TestDatasetWithConfigurableAnalyzer extends TestDatasetWithLowerCas
                 QUERY_PROLOG,
                 "SELECT ?s",
                 "WHERE {",
-                "    ?s text:query ( rdfs:label '\"Déja Vü\"' 10 ) .",
+                "    ?label text:search (  '\"Déja Vü\"' 10 ) . ?s rdfs:label ?label. ",
                 "}"
                 );
         Set<String> expectedURIs = Sets.newHashSet(RESOURCE_BASE + testName);

@@ -78,19 +78,15 @@ public class TestDatasetWithSimpleAnalyzer extends AbstractTestDatasetWithTextIn
                     "    a text:TextIndexLucene ;",
                     "    text:directory <file:" + INDEX_PATH + "> ;",
                     "    text:entityMap :entMap ;",
+                    "    text:analyzer [ a text:SimpleAnalyzer ]",
                     "    .",
                     "",
                     ":entMap",
                     "    a text:EntityMap ;",
                     "    text:entityField      \"uri\" ;",
-                    "    text:defaultField     \"label\" ;",
+                    "    text:defaultField     \"text\" ;",
                     "    text:map (",
-                    "         [ text:field \"label\" ; ",
-                    "           text:predicate rdfs:label ;",
-                    "           text:analyzer [ a text:SimpleAnalyzer ]",
-                    "         ]",
-                    "         [ text:field \"comment\" ; text:predicate rdfs:comment ]",
-                    "         ) ."
+                    "    )."
                     );
     }      
     
@@ -134,7 +130,7 @@ public class TestDatasetWithSimpleAnalyzer extends AbstractTestDatasetWithTextIn
                 QUERY_PROLOG,
                 "SELECT ?s",
                 "WHERE {",
-                "    ?s text:query ( rdfs:label 'the' 10 ) .",
+                "    ?label text:search  'the' . ?s rdfs:label ?label. ",
                 "}"
                 );
         Set<String> expectedURIs = new HashSet<>() ;

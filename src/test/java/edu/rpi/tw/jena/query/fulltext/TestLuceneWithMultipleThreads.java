@@ -52,9 +52,6 @@ public class TestLuceneWithMultipleThreads
     static {
         entDef = new EntityDefinition("uri", "label");
         entDef.setGraphField("graph");
-        entDef.setPrimaryPredicate(RDFS.label);
-        StandardAnalyzer analyzer = new StandardAnalyzer();
-        entDef.setAnalyzer("label", analyzer);
     }
     
     @Test
@@ -197,7 +194,7 @@ public class TestLuceneWithMultipleThreads
                         dsg.begin(ReadWrite.READ);
                         try {
                             QueryExecution qExec = QueryExecutionFactory.create(
-                                    "select * where { graph <http://example.org/graph> { ?s <" + TextVocab.pfQuery + "> (<" + RDFS.label.getURI() + "> \"test\") } }", ds);
+                                    "select * where { graph <http://example.org/graph> { ?label <" + TextVocab.pfQuery + "> ( \"test\"). ?s <" + RDFS.label.getURI() + "> ?label. } }", ds);
 //                                    "select * where { graph <http://example.org/graph> { ?s <" + RDFS.label.getURI() + "> \"test\" } }", ds);
                             ResultSet rs = qExec.execSelect();
                             assertFalse(rs.hasNext());

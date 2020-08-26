@@ -45,7 +45,7 @@ public class TestDatasetWithLuceneTextIndexDeletionSupport extends AbstractTestD
                 QUERY_PROLOG,
                 "SELECT ?s",
                 "WHERE {",
-                "    ?s text:query ( rdfs:label 'first' ) .",
+                "    ?label text:search 'first'. ?s rdfs:label ?label .",
                 "}"
         );
         Set<String> expectedURIs = new HashSet<>() ;
@@ -64,7 +64,7 @@ public class TestDatasetWithLuceneTextIndexDeletionSupport extends AbstractTestD
                 QUERY_PROLOG,
                 "SELECT ?s",
                 "WHERE {",
-                "    ?s text:query ( rdfs:label 'first' ) .",
+                "    ?label  text:search  'first'  . ?s rdfs:label ?label. ",
                 "}"
         );
         doTestNoResult(dataset, "", queryString);
@@ -84,9 +84,9 @@ public class TestDatasetWithLuceneTextIndexDeletionSupport extends AbstractTestD
         );
         String queryString = StrUtils.strjoinNL(
                 QUERY_PROLOG,
-                "SELECT ?s",
+                "SELECT distinct ?s",
                 "WHERE {",
-                "    ?s text:query ( rdfs:label 'same' ) .",
+                "    ?label text:search (  'same' ) . ?s rdfs:label ?label. ",
                 "}"
         );
         Set<String> expectedURIs = new HashSet<>() ;

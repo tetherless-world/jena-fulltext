@@ -26,7 +26,7 @@ public class TextVocab
 {
     public static final String NS                   =  "http://jena.apache.org/text#" ;
     
-    public static final String pfQuery              =  NS+"query" ;
+    public static final String pfQuery              =  NS+"search" ;
 
     public static final Resource textDataset        = Vocab.resource(NS, "TextDataset") ;
     public static final Property pDataset           = Vocab.property(NS, "dataset") ;

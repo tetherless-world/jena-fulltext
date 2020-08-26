@@ -69,7 +69,7 @@ public class TestDatasetWithLuceneMultilingualTextIndex extends AbstractTestData
                     ":dataset",
                     "    a                     tdb:DatasetTDB ;",
                     "    tdb:location          \"--mem--\" ;",
-                    "    tdb:unionDefaultGraph true ;",
+//                    "    tdb:unionDefaultGraph true ;",
                     ".",
                     "",
                     ":indexLucene",
@@ -77,20 +77,13 @@ public class TestDatasetWithLuceneMultilingualTextIndex extends AbstractTestData
                     "    text:directory \"mem\" ;",
                     "    text:storeValues true ;",
                     "    text:multilingualSupport true ;",
-                    "    text:entityMap :entMap ;",
+                    "    text:entityMap <#entMap> ;",
                     "    .",
-                    "",
-                    ":entMap",
-                    "    a text:EntityMap ;",
-                    "    text:entityField      \"uri\" ;",
-                    "    text:defaultField     \"label\" ;",
-                    "    text:langField        \"lang\" ;",
-                    "    text:graphField       \"graph\" ;",
-                    "    text:map (",
-                    "         [ text:field \"label\" ; text:predicate rdfs:label ]",
-                    "         [ text:field \"comment\" ; text:predicate rdfs:comment ]",
-                    "         [ text:field \"prefLabel\" ; text:predicate skos:prefLabel ]",
-                    "         ) ."
+                    "<#entMap> a text:EntityMap ;",
+                    "    text:entityField      'uri' ;",
+                    "    text:defaultField     'text' ;",
+                    "    .",
+                    ""
                     );
     }
     
@@ -116,7 +109,7 @@ public class TestDatasetWithLuceneMultilingualTextIndex extends AbstractTestData
                 QUERY_PROLOG,
                 "SELECT ?s",
                 "WHERE {",
-                "    ?s text:query ( rdfs:label 'book' 'lang:en'  10 ) .",
+                "    ?label text:search ('book'@en  10 ). ?s rdfs:label ?label .",
                 "}"
                 );
         doTestSearch(turtle, queryString, new HashSet<String>());
@@ -138,11 +131,12 @@ public class TestDatasetWithLuceneMultilingualTextIndex extends AbstractTestData
                 QUERY_PROLOG,
                 "SELECT ?s",
                 "WHERE {",
-                "    ?s text:query ( rdfs:label 'gift' 'lang:en' 10 ) .",
+                "    ?label text:search 'gift'@en . ?s rdfs:label ?label.",
+//                "    ?s rdfs:label 'He offered me a gift'@en . ",
                 "}"
         );
         Set<String> expectedURIs = new HashSet<>() ;
-        expectedURIs.addAll( Arrays.asList("http://example.org/data/resource/testEnglishLocalizedResource")) ;
+        expectedURIs.addAll( Arrays.asList(RESOURCE_BASE+"testEnglishLocalizedResource")) ;
         doTestSearch(turtle, queryString, expectedURIs);
     }
 
@@ -162,7 +156,7 @@ public class TestDatasetWithLuceneMultilingualTextIndex extends AbstractTestData
                 QUERY_PROLOG,
                 "SELECT ?s",
                 "WHERE {",
-                "    ?s text:query ( rdfs:label 'gift' 'lang:de' 10 ) .",
+                "    ?label text:search ('gift'@de 10 ) . ?s rdfs:label ?label. ",
                 "}"
         );
         Set<String> expectedURIs = new HashSet<>() ;
@@ -182,7 +176,7 @@ public class TestDatasetWithLuceneMultilingualTextIndex extends AbstractTestData
                 QUERY_PROLOG,
                 "SELECT ?s",
                 "WHERE {",
-                "    ?s text:query ( rdfs:label 'engineering' 'lang:en' 10 ) .",
+                "    ?label text:search (  'engineering'@en 10 ) . ?s rdfs:label ?label. ",
                 "}"
         );
         Set<String> expectedURIs = new HashSet<>() ;
@@ -205,11 +199,13 @@ public class TestDatasetWithLuceneMultilingualTextIndex extends AbstractTestData
                 QUERY_PROLOG,
                 "SELECT ?s",
                 "WHERE {",
-                "    ?s text:query ( rdfs:label 'text' 'lang:none' 10 ) .",
+                "    ?label text:search (  'text' 10 ) . ?s rdfs:label ?label. ",
                 "}"
         );
         Set<String> expectedURIs = new HashSet<>() ;
-        expectedURIs.addAll( Arrays.asList("http://example.org/data/resource/testUnlocalizedResource")) ;
+        expectedURIs.addAll( Arrays.asList(
+        		RESOURCE_BASE + "testUnlocalizedResource", 
+        		RESOURCE_BASE + "testLocalizedResource")) ;
         doTestSearch(turtle, queryString, expectedURIs);
     }
 
@@ -221,9 +217,9 @@ public class TestDatasetWithLuceneMultilingualTextIndex extends AbstractTestData
                 "PREFIX skos: <http://www.w3.org/2004/02/skos/core#>",
                 "SELECT ?s",
                 "WHERE {",
-                "    { ?s text:query ( skos:prefLabel 'frites' 'lang:fr' ) }",
+                "    { ?label text:search (  'frites'@fr ). ?s skos:prefLabel ?label.  }",
                 "    UNION ",
-                "    { ?s text:query ( skos:prefLabel 'Kartoffelpüree' 'lang:de' ) }" ,
+                "    { ?label text:search (  'Kartoffelpüree'@de ). ?s skos:prefLabel ?label.  }" ,
                 "}"
         );
         Set<String> expectedURIs = new HashSet<>() ;

@@ -89,8 +89,7 @@ public class TextDocProducerEntities extends DatasetChangesBatched implements Te
             entity.put(graphField, gx) ;
         
         for ( Quad quad : batch ) {
-            Node p = quad.getPredicate() ;
-            String field = defn.getField(p) ;
+            String field = defn.getPrimaryField() ;
             if ( field == null )
                 continue ;
             Node o = quad.getObject() ;
@@ -100,8 +99,6 @@ public class TextDocProducerEntities extends DatasetChangesBatched implements Te
             else if ( o.isLiteral() )
                 val = o.getLiteralLexicalForm() ;
             else {
-                log.warn("Not a literal value for mapped field-predicate: " + field + " :: "
-                         + FmtUtils.stringForString(field)) ;
                 continue ;
             }
             entity.put(field, val) ;

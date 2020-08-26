@@ -72,7 +72,7 @@ public class TestDatasetWithAnalyzingQueryParser extends TestDatasetWithConfigur
                 QUERY_PROLOG,
                 "SELECT ?s",
                 "WHERE {",
-                "    ?s text:query ( rdfs:label 'édu*' 10 ) .",
+                "    ?label text:search 'édu*' . ?s rdfs:label ?label. ",
                 "}"
                 );
         Set<String> expectedURIs = Sets.newHashSet(RESOURCE_BASE + testName);

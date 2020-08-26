@@ -177,7 +177,7 @@ public class TestTextGraphIndexExtra2 extends AbstractTestDatasetWithTextIndexBa
                 QUERY_PROLOG,
                 "SELECT ?s",
                 "WHERE {",
-                "  GRAPH ?s { ?subj text:query ( rdfs:label 'testResultOne' 10 ) . }",
+                "  GRAPH ?s {?label text:search (  'testResultOne' 10 ) .  ?subj rdfs:label ?label. }",
                 "}"
                 );
         Set<String> expectedURIs = new HashSet<>() ;
@@ -211,7 +211,7 @@ public class TestTextGraphIndexExtra2 extends AbstractTestDatasetWithTextIndexBa
                 QUERY_PROLOG,
                 "SELECT ?s",
                 "WHERE {",
-                "  GRAPH ?s { ?subj text:query ( rdfs:label 'testResultThree' 10 ) . }",
+                "  GRAPH ?s {?label text:search (  'testResultThree' 10 ) .  ?subj rdfs:label ?label. }",
                 "}"
                 );
         Set<String> expectedURIs = new HashSet<>() ;
@@ -245,7 +245,7 @@ public class TestTextGraphIndexExtra2 extends AbstractTestDatasetWithTextIndexBa
                 QUERY_PROLOG,
                 "SELECT ?s",
                 "WHERE {",
-                "  GRAPH ?s { ?subj text:query ( rdfs:label 'testResultOne' 10 'lang:en' ) . }",
+                "  GRAPH ?s { ?label text:search (  'testResultOne' 10 'lang:en' ) . ?subj rdfs:label ?label. }",
                 "}"
                 );
         Set<String> expectedURIs = new HashSet<>() ;
@@ -279,7 +279,7 @@ public class TestTextGraphIndexExtra2 extends AbstractTestDatasetWithTextIndexBa
                 QUERY_PROLOG,
                 "SELECT ?s ?g",
                 "WHERE {",
-                "  (?s ?sc ?lit ?g) text:query ( rdfs:label 'testResultThree' 10 ) . ",
+                "  graph ?g {(?lit ?sc) text:search (  'testResultThree' 10 ) . ?s rdfs:label ?lit. }",
                 "}"
                 );
         Set<String> expectedURIs = new HashSet<>() ;
@@ -318,7 +318,7 @@ public class TestTextGraphIndexExtra2 extends AbstractTestDatasetWithTextIndexBa
                 QUERY_PROLOG,
                 "SELECT ?s ?g",
                 "WHERE {",
-                "  (?s ?sc ?lit ?g) text:query ( rdfs:label 'testResultOne' 10 ) . ",
+                "  graph ?g { (?lit ?sc) text:search (  'testResultOne' 10 ) . ?s rdfs:label ?lit. } ",
                 "}"
                 );
         Set<String> expectedURIs = new HashSet<>() ;

@@ -43,9 +43,6 @@ public class AbstractTestDatasetWithLuceneTextIndexDeletionSupport extends Abstr
         Dataset ds1 = TDBFactory.createDataset() ;
         Directory dir = new ByteBuffersDirectory() ;
         EntityDefinition eDef = new EntityDefinition("iri", "text");
-        eDef.setPrimaryPredicate(RDFS.label);
-        eDef.set("comment", RDFS.comment.asNode()) ; // some tests require indexing rdfs:comment
-        //uid field to allow deletion
         eDef.setUidField("uid");
         TextIndex tidx = new TextIndexLucene(dir, new TextIndexConfig(eDef)) ;
         dataset = TextDatasetFactory.create(ds1, tidx) ;

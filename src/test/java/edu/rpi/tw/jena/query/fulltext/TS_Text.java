@@ -60,13 +60,10 @@ import edu.rpi.tw.jena.query.fulltext.assembler.TestTextIndexLuceneAssembler;
     , TestGenericAnalyzerAssembler.class
     , TestTextGraphIndexExtra.class
     , TestTextGraphIndexExtra2.class
-    , TestTextHighlighting.class
     , TestTextDefineAnalyzers.class
     , TestTextMultilingualEnhancements.class
     
     , TestPropListsAssembler.class
-    , TestTextPropLists.class
-    , TestTextPropLists02.class
     , TestTextMultilingualEnhancements02.class
 })
 

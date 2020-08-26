@@ -71,20 +71,15 @@ public abstract class AbstractTestDatasetWithAnalyzer extends AbstractTestDatase
                     "    a text:TextIndexLucene ;",
                     "    text:directory \"mem\" ;",
                     "    text:queryParser " + parser + ";",
+                    "    text:analyzer [ a " + analyzer + " ];",
                     "    text:entityMap :entMap ;",
                     "    .",
                     "",
                     ":entMap",
                     "    a text:EntityMap ;",
                     "    text:entityField      \"uri\" ;",
-                    "    text:defaultField     \"label\" ;",
-                    "    text:map (",
-                    "         [ text:field \"label\" ; ",
-                    "           text:predicate rdfs:label ;",
-                    "           text:analyzer [ a " + analyzer + " ]",
-                    "         ]",
-                    "         [ text:field \"comment\" ; text:predicate rdfs:comment ]",
-                    "         ) ."
+                    "    text:defaultField     \"text\" ;",
+                    "    ."
                     );
     }      
     

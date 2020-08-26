@@ -86,7 +86,7 @@ public class TestBuildTextDataset extends BaseTest
         String pre = StrUtils.strjoinNL("PREFIX : <http://example/>", "PREFIX text: <http://jena.apache.org/text#>",
                                         "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>") ;
 
-        String qs = StrUtils.strjoinNL("SELECT * ", " { ?s text:query (rdfs:label 'X1') ;", "      rdfs:label ?label",
+        String qs = StrUtils.strjoinNL("SELECT ?s ", " { ?label text:search 'X1'.", "?s rdfs:label ?label",
                                        " }") ;
 
         dataset.begin(ReadWrite.READ) ;
@@ -100,7 +100,7 @@ public class TestBuildTextDataset extends BaseTest
         finally {
             dataset.end() ;
         }
-        assertEquals("Unexpected result count", 2, x) ;
+        assertEquals("Unexpected result count", 1, x) ;
     }
 
     public static Dataset createCode() {
@@ -109,7 +109,6 @@ public class TestBuildTextDataset extends BaseTest
 
         // Define the index mapping
         EntityDefinition entDef = new EntityDefinition("uri", "text");
-        entDef.setPrimaryPredicate(RDFS.label);
 
         // Lucene, in memory.
         Directory dir = new ByteBuffersDirectory() ;

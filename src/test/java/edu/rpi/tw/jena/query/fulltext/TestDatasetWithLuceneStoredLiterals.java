@@ -187,7 +187,7 @@ public class TestDatasetWithLuceneStoredLiterals extends AbstractTestDatasetWith
                 QUERY_PROLOG,
                 "SELECT ?s ?literal",
                 "WHERE {",
-                "    (?s ?score ?literal) text:query ('text') .",
+                "    (?literal ?score) text:search ('text') . ?s ?p ?literal. ",
                 "}"
                 );
 
@@ -213,7 +213,7 @@ public class TestDatasetWithLuceneStoredLiterals extends AbstractTestDatasetWith
                 QUERY_PROLOG,
                 "SELECT ?s ?literal",
                 "WHERE {",
-                "    (?s ?score ?literal) text:query (rdfs:comment 'text') .",
+                "    (?literal ?score) text:search 'text' . ?s rdfs:comment ?literal.",
                 "}"
                 );
 
@@ -239,7 +239,7 @@ public class TestDatasetWithLuceneStoredLiterals extends AbstractTestDatasetWith
                 QUERY_PROLOG,
                 "SELECT ?s ?literal",
                 "WHERE {",
-                "    (?s ?score ?literal) text:query ('text') .",
+                "    (?literal ?score ) text:search ('text') . ?s ?p ?literal.",
                 "}"
                 );
 
@@ -265,7 +265,7 @@ public class TestDatasetWithLuceneStoredLiterals extends AbstractTestDatasetWith
                 QUERY_PROLOG,
                 "SELECT ?s ?literal",
                 "WHERE {",
-                "    (?s ?score ?literal) text:query (rdfs:comment 'true') .",
+                "    (?literal ?score ) text:search ( 'true') . ?s rdfs:comment ?literal.",
                 "}"
                 );
 
@@ -291,7 +291,7 @@ public class TestDatasetWithLuceneStoredLiterals extends AbstractTestDatasetWith
                 QUERY_PROLOG,
                 "SELECT ?s ?literal",
                 "WHERE {",
-                "    (?s ?score ?literal) text:query (rdfs:comment 'nontext') .",
+                "    (?literal ?score) text:search ( 'nontext') . ?s rdfs:comment ?literal.",
                 "}"
                 );
 
@@ -321,7 +321,7 @@ public class TestDatasetWithLuceneStoredLiterals extends AbstractTestDatasetWith
                 "SELECT ?s ?literal",
                 "WHERE {",
                 "    BIND(<" + RESOURCE_BASE + testName + "> AS ?s)",
-                "    (?s ?score ?literal) text:query (rdfs:comment 'nontext') .",
+                "    (?literal ?score) text:search ( 'nontext') . ?s rdfs:comment ?literal.",
                 "}"
                 );
 

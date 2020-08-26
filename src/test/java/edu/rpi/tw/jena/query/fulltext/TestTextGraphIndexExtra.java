@@ -42,7 +42,7 @@ public class TestTextGraphIndexExtra {
     static Node rdfsLabel     = RDFS.Nodes.label;
 
     static Dataset textDataset(Dataset dataset) {
-        EntityDefinition entdef = new EntityDefinition("uri", "text", "graph", rdfsLabel);
+        EntityDefinition entdef = new EntityDefinition("uri", "text", "graph");
         TextIndex textIndex = TextDatasetFactory.createLuceneIndex(new ByteBuffersDirectory(), new TextIndexConfig(entdef));
         return TextDatasetFactory.create(dataset, textIndex, true);
     }
@@ -63,7 +63,7 @@ public class TestTextGraphIndexExtra {
         ("PREFIX text: <http://jena.apache.org/text#>"
         ,"SELECT * WHERE {"
         ,"  graph ?g {"
-        ,"    ?thing text:query 'test1' ."
+        ,"    ?o text:search 'test1' . ?thing ?p ?o. "
         // This would check in the graph the literal is present.
         // Then test_mem_link_ds returns 1.
         //,"    ?thing ?p 'test1' ."  
@@ -75,7 +75,7 @@ public class TestTextGraphIndexExtra {
         ("PREFIX text: <http://jena.apache.org/text#>"
         ,"SELECT * WHERE {"
         ,"  graph ?g {"
-        ,"    ?thing text:query 'test1' ."
+        ,"    ?o text:search 'test1' . ?thing ?p ?o. "
         // This checks in the graph that the literal is present.
         ,"    ?thing ?p 'test1' ."  
         ,"  }"
@@ -99,7 +99,7 @@ public class TestTextGraphIndexExtra {
         // The general dataset contains graphs as given by linking to the graph object.
         // It does not provide their name in getGraph() and so the answer is 2 hits,
         // one for each of <graph1> and <graph2> whereas it is 1 otherwise.
-        test(DatasetFactory.createGeneral(), textQuery, 2);
+        test(DatasetFactory.createGeneral(), textQuery, 1);
         test(DatasetFactory.createGeneral(), textQuery2, 1);
     }
 

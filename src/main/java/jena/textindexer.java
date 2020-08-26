@@ -26,6 +26,7 @@ import org.apache.jena.graph.Node ;
 import org.apache.jena.query.Dataset ;
 import org.apache.jena.query.ReadWrite;
 import org.apache.jena.sparql.core.Quad ;
+import org.apache.jena.vocabulary.XSD;
 import org.slf4j.Logger ;
 import org.slf4j.LoggerFactory ;
 import jena.cmd.ArgDecl ;
@@ -113,32 +114,22 @@ public class textindexer extends CmdARQ {
                 dataset.begin(ReadWrite.READ);
             }
             
-            Set<Node> properties = getIndexedProperties() ;
     
-            // there are various strategies possible here
-            // what is implemented is a first cut simple approach
-            // currently - for each indexed property
-            // list and index triples with that property
-            // that way only process triples that will be indexed
-            // but each entity may be updated several times
-    
-            for ( Node property : properties )
+            Iterator<Quad> quadIter = dataset.find( Node.ANY, Node.ANY, Node.ANY, Node.ANY );
+            for (; quadIter.hasNext(); )
             {
-                Iterator<Quad> quadIter = dataset.find( Node.ANY, Node.ANY, property, Node.ANY );
-                for (; quadIter.hasNext(); )
+                Quad quad = quadIter.next();
+                if ( Quad.isDefaultGraph(quad.getGraph()) && quad.getObject().isLiteral() ) {
+                	if (quad.getObject().getLiteralDatatype().equals(XSD.xstring)) continue;
+                    // Need to use urn:x-arq:DefaultGraphNode for text indexing (JENA-1133)
+                    quad = Quad.create(Quad.defaultGraphNodeGenerated,
+                        quad.getSubject(), quad.getPredicate(), quad.getObject());
+                }
+                Entity entity = TextQueryFuncs.entityFromQuad( entityDefinition, quad );
+                if ( entity != null )
                 {
-                    Quad quad = quadIter.next();
-                    if ( Quad.isDefaultGraph(quad.getGraph()) ) {
-                        // Need to use urn:x-arq:DefaultGraphNode for text indexing (JENA-1133)
-                        quad = Quad.create(Quad.defaultGraphNodeGenerated,
-                            quad.getSubject(), quad.getPredicate(), quad.getObject());
-                    }
-                    Entity entity = TextQueryFuncs.entityFromQuad( entityDefinition, quad );
-                    if ( entity != null )
-                    {
-                        textIndex.addEntity( entity );
-                        progressMonitor.progressByOne();
-                    }
+                    textIndex.addEntity( entity );
+                    progressMonitor.progressByOne();
                 }
             }
             
@@ -158,14 +149,6 @@ public class textindexer extends CmdARQ {
         }
     }
 
-    private Set<Node> getIndexedProperties() {
-        Set<Node> result = new HashSet<>() ;
-        for (String f : entityDefinition.fields()) {
-            for ( Node p : entityDefinition.getPredicates(f) )
-                result.add(p) ;
-        }
-        return result ;
-    }
 
     // TDBLoader has a similar progress monitor
     // Not used here to avoid making ARQ dependent on TDB

@@ -62,7 +62,7 @@ public abstract class AbstractTestDatasetWithGraphTextIndex extends AbstractTest
                 QUERY_PROLOG,
                 "SELECT ?s",
                 "WHERE {",
-                "  GRAPH ?g { ?s text:query ( rdfs:label 'testOneSimpleResult' 10 ) . }",
+                "  GRAPH ?g {?label text:search ( 'testOneSimpleResult' 10 ) .  ?s rdfs:label ?label. }",
                 "}"
                 );
         Set<String> expectedURIs = new HashSet<>() ;
@@ -90,7 +90,7 @@ public abstract class AbstractTestDatasetWithGraphTextIndex extends AbstractTest
                 QUERY_PROLOG,
                 "SELECT ?s",
                 "WHERE {",
-                "  GRAPH <http://example.org/modelA> { ?s text:query ( rdfs:label 'testOneResult' 10 ) . }",
+                "  GRAPH <http://example.org/modelA> { ?label text:search ( 'testOneResult' 10 ) . ?s rdfs:label ?label. }",
                 "}"
                 );
         Set<String> expectedURIs = new HashSet<>() ;
@@ -124,7 +124,7 @@ public abstract class AbstractTestDatasetWithGraphTextIndex extends AbstractTest
                 QUERY_PROLOG,
                 "SELECT ?s",
                 "WHERE {",
-                "  GRAPH <http://example.org/modelA> { ?s text:query ( rdfs:label 'testResultOne OR testResultTwo' 10 ) . }",
+                "  GRAPH <http://example.org/modelA> { ?label text:search ( 'testResultOne OR testResultTwo' 10 ) . ?s rdfs:label ?label.}",
                 "}"
                 );
         Set<String> expectedURIs = new HashSet<>() ;
@@ -152,7 +152,7 @@ public abstract class AbstractTestDatasetWithGraphTextIndex extends AbstractTest
                 QUERY_PROLOG,
                 "SELECT ?s",
                 "WHERE {",
-                "    ?s text:query ( rdfs:label 'testOneResult' 10 ) .",
+                "    ?label text:search ( 'testOneResult' 10 ) . ?s rdfs:label ?label.",
                 "}"
                 );
         Set<String> expectedURIs = new HashSet<>() ;
@@ -183,7 +183,7 @@ public abstract class AbstractTestDatasetWithGraphTextIndex extends AbstractTest
                 QUERY_PROLOG,
                 "SELECT ?s",
                 "WHERE {",
-                "  GRAPH ?g { ?s text:query ( rdfs:label 'testResult' 10 ) . }",
+                "  GRAPH ?g { ?label text:search ( 'testResult' 10 ) . ?s rdfs:label ?label. }",
                 "}"
                 );
         Set<String> expectedURIs = new HashSet<>() ;

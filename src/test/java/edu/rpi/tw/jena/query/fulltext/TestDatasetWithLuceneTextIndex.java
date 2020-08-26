@@ -105,7 +105,8 @@ public class TestDatasetWithLuceneTextIndex extends AbstractTestDatasetWithTextI
                 QUERY_PROLOG,
                 "SELECT ?s",
                 "WHERE {",
-                "    ?s text:query ( rdfs:label \"a* OR b* OR c* OR d* OR e* OR f* OR g* OR h* OR i* OR j* OR k* OR l* OR m* OR n* OR o* OR p* OR q* OR r* OR s* OR t* OR u* OR v* OR w* OR x* OR y* OR z*\" 10 ) .",
+                "    ?literal text:search ( \"a* OR b* OR c* OR d* OR e* OR f* OR g* OR h* OR i* OR j* OR k* OR l* OR m* OR n* OR o* OR p* OR q* OR r* OR s* OR t* OR u* OR v* OR w* OR x* OR y* OR z*\" 10 ) .",
+                "    ?s rdfs:label ?literal. ",
                 "}"
                 );
         doTestSearch(turtle, queryString, new HashSet<String>());

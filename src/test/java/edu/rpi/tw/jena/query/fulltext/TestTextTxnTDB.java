@@ -92,7 +92,6 @@ public class TestTextTxnTDB
         Dataset ds1 = factory.create();
         Directory dir = new ByteBuffersDirectory() ;
         EntityDefinition eDef = new EntityDefinition("iri", "text");
-        eDef.setPrimaryPredicate(RDFS.label);
         TextIndex tidx = new TextIndexLucene(dir, new TextIndexConfig(eDef)) ;
         Dataset ds = TextDatasetFactory.create(ds1, tidx) ;
         return ds ;
@@ -128,8 +127,8 @@ public class TestTextTxnTDB
             String qs = StrUtils.strjoinNL("PREFIX text: <http://jena.apache.org/text#>",
                 "PREFIX rdfs:    <http://www.w3.org/2000/01/rdf-schema#>",
                 "SELECT *",
-                "{ ?s text:query 'foo' ;",
-                "     rdfs:label 'foo'",
+                "{ ?o text:search 'foo' .",
+                "  ?s rdfs:label ?o.",
                 "}"
                 ) ;
             Query q = QueryFactory.create(qs) ;
@@ -154,8 +153,8 @@ public class TestTextTxnTDB
                 "PREFIX text: <http://jena.apache.org/text#>",
                 "PREFIX rdfs:    <http://www.w3.org/2000/01/rdf-schema#>",
                 "SELECT *",
-                "{ ?s text:query 'foo' ;",
-                "     rdfs:label 'foo'",
+                "{ ?o text:search 'foo' .",
+                "  ?s rdfs:label ?o.",
                 "}"
                 ) ;
 
@@ -181,7 +180,7 @@ public class TestTextTxnTDB
                 "PREFIX rdfs:   <http://www.w3.org/2000/01/rdf-schema#>",
                 "SELECT *",
                 "FROM <ex:g1>",
-                "{ ?s text:query 'foo' . ?s rdfs:label ?o }"
+                "{ ?o text:search 'foo' . ?s rdfs:label ?o }"
                 ) ;
             Query q = QueryFactory.create(qs) ;
             QueryExecution qexec = QueryExecutionFactory.create(q, ds) ;
@@ -205,7 +204,7 @@ public class TestTextTxnTDB
                 "PREFIX rdfs:   <http://www.w3.org/2000/01/rdf-schema#>",
                 "SELECT *",
                 "FROM <"+Quad.unionGraph+">",
-                "{ ?s text:query 'foo*' . ?s rdfs:label ?o }"
+                "{ ?o text:search 'foo*' . ?s rdfs:label ?o }"
                 ) ;
             Query q = QueryFactory.create(qs) ;
             QueryExecution qexec = QueryExecutionFactory.create(q, ds) ;
@@ -230,7 +229,7 @@ public class TestTextTxnTDB
                 "PREFIX rdfs:   <http://www.w3.org/2000/01/rdf-schema#>",
                 "SELECT *",
                 "{ GRAPH <"+Quad.unionGraph+">",
-                "    { ?s text:query 'foo*' . ?s rdfs:label ?o }",
+                "    { ?o text:search 'foo*' . ?s rdfs:label ?o }",
                 "}"
                 ) ;
             Query q = QueryFactory.create(qs) ;
@@ -256,9 +255,9 @@ public class TestTextTxnTDB
             String qs = StrUtils.strjoinNL(
                 "PREFIX text:   <http://jena.apache.org/text#>",
                 "PREFIX rdfs:   <http://www.w3.org/2000/01/rdf-schema#>",
-                "SELECT *",
+                "SELECT ?s",
                 "FROM <ex:g1>",
-                "{ ?s a <http://example.org/Entity> . ?s text:query 'foo' }"
+                "{ ?s a <http://example.org/Entity> . ?lit text:search 'foo'. ?s ?p ?lit. }"
                 ) ;
             Query q = QueryFactory.create(qs) ;
             QueryExecution qexec = QueryExecutionFactory.create(q, ds) ;
@@ -283,7 +282,7 @@ public class TestTextTxnTDB
                 "PREFIX text:   <http://jena.apache.org/text#>",
                 "PREFIX rdfs:   <http://www.w3.org/2000/01/rdf-schema#>",
                 "SELECT *",
-                "{ ?s text:query 'foo' . ?s a <http://example.org/Entity> }"
+                "{ ?o text:search 'foo' . ?s ?p ?o. ?s a <http://example.org/Entity> }"
                 ) ;
             Query q = QueryFactory.create(qs) ;
             QueryExecution qexec = QueryExecutionFactory.create(q, ds) ;
@@ -308,7 +307,7 @@ public class TestTextTxnTDB
                 "PREFIX text:   <http://jena.apache.org/text#>",
                 "PREFIX rdfs:   <http://www.w3.org/2000/01/rdf-schema#>",
                 "SELECT *",
-                "{ ?s a <http://example.org/Entity> . ?s text:query 'foo' }"
+                "{ ?s a <http://example.org/Entity> . ?o text:search 'foo'. ?s ?p ?o. }"
                 );
             Query q = QueryFactory.create(qs);
             QueryExecution qexec = QueryExecutionFactory.create(q, ds);
