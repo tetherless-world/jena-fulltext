@@ -124,7 +124,7 @@ public class TestTextTxnTDB
             ds.asDatasetGraph().add(quad) ;
         });
         Txn.executeRead(ds, ()->{
-            String qs = StrUtils.strjoinNL("PREFIX text: <http://jena.apache.org/text#>",
+            String qs = StrUtils.strjoinNL("PREFIX text: <http://jena.apache.org/fulltext#>",
                 "PREFIX rdfs:    <http://www.w3.org/2000/01/rdf-schema#>",
                 "SELECT *",
                 "{ ?o text:search 'foo' .",
@@ -150,7 +150,7 @@ public class TestTextTxnTDB
         });
         Txn.executeRead(ds, ()->{
             String qs = StrUtils.strjoinNL(
-                "PREFIX text: <http://jena.apache.org/text#>",
+                "PREFIX text: <http://jena.apache.org/fulltext#>",
                 "PREFIX rdfs:    <http://www.w3.org/2000/01/rdf-schema#>",
                 "SELECT *",
                 "{ ?o text:search 'foo' .",
@@ -176,7 +176,7 @@ public class TestTextTxnTDB
         });
         Txn.executeRead(ds,  ()->{
             String qs = StrUtils.strjoinNL(
-                "PREFIX text:   <http://jena.apache.org/text#>",
+                "PREFIX text:   <http://jena.apache.org/fulltext#>",
                 "PREFIX rdfs:   <http://www.w3.org/2000/01/rdf-schema#>",
                 "SELECT *",
                 "FROM <ex:g1>",
@@ -200,7 +200,7 @@ public class TestTextTxnTDB
         });
         Txn.executeRead(ds,  ()->{
             String qs = StrUtils.strjoinNL(
-                "PREFIX text:   <http://jena.apache.org/text#>",
+                "PREFIX text:   <http://jena.apache.org/fulltext#>",
                 "PREFIX rdfs:   <http://www.w3.org/2000/01/rdf-schema#>",
                 "SELECT *",
                 "FROM <"+Quad.unionGraph+">",
@@ -225,7 +225,7 @@ public class TestTextTxnTDB
         });
         Txn.executeRead(ds,  ()->{
             String qs = StrUtils.strjoinNL(
-                "PREFIX text:   <http://jena.apache.org/text#>",
+                "PREFIX text:   <http://jena.apache.org/fulltext#>",
                 "PREFIX rdfs:   <http://www.w3.org/2000/01/rdf-schema#>",
                 "SELECT *",
                 "{ GRAPH <"+Quad.unionGraph+">",
@@ -253,7 +253,7 @@ public class TestTextTxnTDB
         });
         Txn.executeRead(ds,  ()->{
             String qs = StrUtils.strjoinNL(
-                "PREFIX text:   <http://jena.apache.org/text#>",
+                "PREFIX text:   <http://jena.apache.org/fulltext#>",
                 "PREFIX rdfs:   <http://www.w3.org/2000/01/rdf-schema#>",
                 "SELECT ?s",
                 "FROM <ex:g1>",
@@ -279,7 +279,7 @@ public class TestTextTxnTDB
         });
         Txn.executeRead(ds,  ()->{
             String qs = StrUtils.strjoinNL(
-                "PREFIX text:   <http://jena.apache.org/text#>",
+                "PREFIX text:   <http://jena.apache.org/fulltext#>",
                 "PREFIX rdfs:   <http://www.w3.org/2000/01/rdf-schema#>",
                 "SELECT *",
                 "{ ?o text:search 'foo' . ?s ?p ?o. ?s a <http://example.org/Entity> }"
@@ -304,7 +304,7 @@ public class TestTextTxnTDB
         });
         Txn.executeRead(ds,  ()->{
             String qs = StrUtils.strjoinNL(
-                "PREFIX text:   <http://jena.apache.org/text#>",
+                "PREFIX text:   <http://jena.apache.org/fulltext#>",
                 "PREFIX rdfs:   <http://www.w3.org/2000/01/rdf-schema#>",
                 "SELECT *",
                 "{ ?s a <http://example.org/Entity> . ?o text:search 'foo'. ?s ?p ?o. }"

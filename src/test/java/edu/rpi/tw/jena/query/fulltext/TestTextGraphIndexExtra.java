@@ -60,7 +60,7 @@ public class TestTextGraphIndexExtra {
     }
 
     String textQuery  = StrUtils.strjoinNL
-        ("PREFIX text: <http://jena.apache.org/text#>"
+        ("PREFIX text: <http://jena.apache.org/fulltext#>"
         ,"SELECT * WHERE {"
         ,"  graph ?g {"
         ,"    ?o text:search 'test1' . ?thing ?p ?o. "
@@ -72,7 +72,7 @@ public class TestTextGraphIndexExtra {
         );
 
     String textQuery2  = StrUtils.strjoinNL
-        ("PREFIX text: <http://jena.apache.org/text#>"
+        ("PREFIX text: <http://jena.apache.org/fulltext#>"
         ,"SELECT * WHERE {"
         ,"  graph ?g {"
         ,"    ?o text:search 'test1' . ?thing ?p ?o. "

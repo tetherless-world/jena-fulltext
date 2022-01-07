@@ -19,6 +19,8 @@
 package jena ;
 
 import org.apache.jena.atlas.lib.Lib ;
+import org.apache.jena.cmd.ArgDecl;
+import org.apache.jena.cmd.CmdException;
 import org.apache.jena.sparql.core.assembler.AssemblerUtils ;
 import org.apache.lucene.analysis.Analyzer ;
 import org.apache.lucene.document.Document ;
@@ -32,8 +34,6 @@ import org.apache.lucene.search.ScoreDoc ;
 import org.apache.lucene.store.Directory ;
 import org.slf4j.Logger ;
 import org.slf4j.LoggerFactory ;
-import jena.cmd.ArgDecl ;
-import jena.cmd.CmdException ;
 import arq.cmdline.CmdARQ ;
 import edu.rpi.tw.jena.query.fulltext.*;
 import edu.rpi.tw.jena.query.fulltext.assembler.TextVocab;

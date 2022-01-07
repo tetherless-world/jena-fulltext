@@ -60,7 +60,7 @@ public class TestTextGraphIndexExtra2 extends AbstractTestDatasetWithTextIndexBa
                     "prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> ",
                     "prefix ja:   <http://jena.hpl.hp.com/2005/11/Assembler#> ",
                     "prefix tdb:  <http://jena.hpl.hp.com/2008/tdb#>",
-                    "prefix text: <http://jena.apache.org/text#>",
+                    "prefix text: <http://jena.apache.org/fulltext#>",
                     "prefix :     <" + SPEC_BASE + ">",
                     "",
                     "[] ja:loadClass    \"edu.rpi.tw.jena.query.fulltext.TextQuery\" .",

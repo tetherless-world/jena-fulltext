@@ -33,7 +33,7 @@ public class TextQuery
 {
     private static volatile boolean initialized = false ;
     private static Object lock = new Object() ;
-    public static String NS = "http://jena.apache.org/text#" ;
+    public static String NS = "http://jena.apache.org/fulltext#" ;
     public static String IRI = "http://jena.apache.org/#text" ;
     public static final Symbol textIndex = Symbol.create(NS+"index") ;
     public static final String PATH         = "edu.rpi.tw.jena.query.fulltext";
@@ -63,7 +63,7 @@ public class TextQuery
             SystemInfo sysInfo = new SystemInfo(IRI, PATH, VERSION, BUILD_DATE) ;
             SystemARQ.registerSubSystem(sysInfo) ;
             
-            PropertyFunctionRegistry.get().put("http://jena.apache.org/text#search", new PropertyFunctionFactory() {
+            PropertyFunctionRegistry.get().put("http://jena.apache.org/fulltext#search", new PropertyFunctionFactory() {
                 @Override
                 public PropertyFunction create(String uri) {
                     return new TextQueryPF() ;

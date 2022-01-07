@@ -75,7 +75,7 @@ public class TestTextNonTxnTDB1
         Quad quad = SSE.parseQuad("(<g> <s> rdfs:label 'foo')") ;
         ds.asDatasetGraph().add(quad) ;
         
-        String qs = StrUtils.strjoinNL("PREFIX text: <http://jena.apache.org/text#>",
+        String qs = StrUtils.strjoinNL("PREFIX text: <http://jena.apache.org/fulltext#>",
                                        "PREFIX rdfs:    <http://www.w3.org/2000/01/rdf-schema#>",
                                        "SELECT *",
                                        "{ ?o text:search 'foo' .",
@@ -98,7 +98,7 @@ public class TestTextNonTxnTDB1
 
         ds.begin(ReadWrite.READ) ;
         String qs = StrUtils.strjoinNL(
-            "PREFIX text: <http://jena.apache.org/text#>",
+            "PREFIX text: <http://jena.apache.org/fulltext#>",
             "PREFIX rdfs:    <http://www.w3.org/2000/01/rdf-schema#>",
             "SELECT *",
             "{ ?o text:search 'foo' .",
@@ -123,7 +123,7 @@ public class TestTextNonTxnTDB1
         
         ds.begin(ReadWrite.READ) ;
         String qs = StrUtils.strjoinNL(
-            "PREFIX text:   <http://jena.apache.org/text#>",
+            "PREFIX text:   <http://jena.apache.org/fulltext#>",
             "PREFIX rdfs:   <http://www.w3.org/2000/01/rdf-schema#>",
             "SELECT *",
             "FROM <ex:g1>",
@@ -146,7 +146,7 @@ public class TestTextNonTxnTDB1
         
         ds.begin(ReadWrite.READ) ;
         String qs = StrUtils.strjoinNL(
-            "PREFIX text:   <http://jena.apache.org/text#>",
+            "PREFIX text:   <http://jena.apache.org/fulltext#>",
             "PREFIX rdfs:   <http://www.w3.org/2000/01/rdf-schema#>",
             "SELECT *",
             "FROM <"+Quad.unionGraph+">",
@@ -169,7 +169,7 @@ public class TestTextNonTxnTDB1
         
         ds.begin(ReadWrite.READ) ;
         String qs = StrUtils.strjoinNL(
-            "PREFIX text:   <http://jena.apache.org/text#>",
+            "PREFIX text:   <http://jena.apache.org/fulltext#>",
             "PREFIX rdfs:   <http://www.w3.org/2000/01/rdf-schema#>",
             "SELECT *",
             "{ GRAPH <"+Quad.unionGraph+">",
@@ -196,7 +196,7 @@ public class TestTextNonTxnTDB1
         
         ds.begin(ReadWrite.READ) ;
         String qs = StrUtils.strjoinNL(
-            "PREFIX text:   <http://jena.apache.org/text#>",
+            "PREFIX text:   <http://jena.apache.org/fulltext#>",
             "PREFIX rdfs:   <http://www.w3.org/2000/01/rdf-schema#>",
             "SELECT *",
             "FROM <ex:g1>",
@@ -221,7 +221,7 @@ public class TestTextNonTxnTDB1
         
         ds.begin(ReadWrite.READ) ;
         String qs = StrUtils.strjoinNL(
-            "PREFIX text:   <http://jena.apache.org/text#>",
+            "PREFIX text:   <http://jena.apache.org/fulltext#>",
             "PREFIX rdfs:   <http://www.w3.org/2000/01/rdf-schema#>",
             "SELECT *",
             "{ ?o text:search 'foo' . ?s rdfs:label ?o; a <http://example.org/Entity> }"
@@ -245,7 +245,7 @@ public class TestTextNonTxnTDB1
         
         ds.begin(ReadWrite.READ) ;
         String qs = StrUtils.strjoinNL(
-            "PREFIX text:   <http://jena.apache.org/text#>",
+            "PREFIX text:   <http://jena.apache.org/fulltext#>",
             "PREFIX rdfs:   <http://www.w3.org/2000/01/rdf-schema#>",
             "SELECT *",
             "{  ?o text:search 'foo' . ?s rdfs:label ?o; a <http://example.org/Entity> .}"

@@ -87,7 +87,7 @@ public class TestBuildTextDataset
     }
 
     public static void queryData(Dataset dataset) {
-        String pre = StrUtils.strjoinNL("PREFIX : <http://example/>", "PREFIX text: <http://jena.apache.org/text#>",
+        String pre = StrUtils.strjoinNL("PREFIX : <http://example/>", "PREFIX text: <http://jena.apache.org/fulltext#>",
                                         "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>") ;
 
         String qs = StrUtils.strjoinNL("SELECT ?s ", " { ?label text:search 'X1'.", "?s rdfs:label ?label",

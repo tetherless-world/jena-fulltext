@@ -37,7 +37,7 @@ import edu.rpi.tw.jena.query.fulltext.TextIndexConfig;
 /** Build a text search dataset */
 public class JenaTextExample1
 {
-    static { LogCtl.setLog4j() ; }
+    static { LogCtl.setLog4j2() ; }
     static Logger log = LoggerFactory.getLogger("JenaTextExample") ;
     
     public static void main(String ... argv)
@@ -101,7 +101,7 @@ public class JenaTextExample1
         long startTime = System.nanoTime() ;
         String pre = StrUtils.strjoinNL
             ( "PREFIX : <http://example/>"
-            , "PREFIX text: <http://jena.apache.org/text#>"
+            , "PREFIX text: <http://jena.apache.org/fulltext#>"
             , "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>") ;
         
         String qs = StrUtils.strjoinNL

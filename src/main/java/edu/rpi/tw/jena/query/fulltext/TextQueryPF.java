@@ -45,6 +45,7 @@ import org.apache.jena.sparql.core.* ;
 import org.apache.jena.sparql.engine.ExecutionContext ;
 import org.apache.jena.sparql.engine.QueryIterator ;
 import org.apache.jena.sparql.engine.binding.Binding ;
+import org.apache.jena.sparql.engine.binding.BindingBuilder;
 import org.apache.jena.sparql.engine.binding.BindingFactory ;
 import org.apache.jena.sparql.engine.binding.BindingMap ;
 import org.apache.jena.sparql.engine.iterator.QueryIterPlainWrapper ;
@@ -120,7 +121,7 @@ public class TextQueryPF extends PropertyFunctionBase {
             try {
                 return (TextIndex)obj ;
             } catch (ClassCastException ex) {
-                Log.warn(TextQueryPF.class, "Context setting '" + TextQuery.textIndex + "'is not a TextIndex") ;
+                Log.warn(TextQueryPF.class, "Context setting '" + obj.toString() + "'is not a TextIndex") ;
             }
         }
 
@@ -203,7 +204,7 @@ public class TextQueryPF extends PropertyFunctionBase {
         return qIter ;
     }
 
-    private static void addIf(BindingMap bmap, Var var, Node node) {
+    private static void addIf(BindingBuilder bmap, Var var, Node node) {
         if (var != null && node != null) {
             bmap.add(var, node);
         }
@@ -217,15 +218,15 @@ public class TextQueryPF extends PropertyFunctionBase {
         Function<TextHit,Binding> converter = (TextHit hit) -> {
             if (score == null)
                 return literalVar != null ? BindingFactory.binding(binding, literalVar, hit.getLiteral()) : BindingFactory.binding(binding);
-            BindingMap bmap = BindingFactory.create(binding);
+            BindingBuilder bmap = Binding.builder(binding);
             addIf(bmap, literalVar, hit.getLiteral());
             addIf(bmap, scoreVar, NodeFactoryExtra.floatToNode(hit.getScore()));
             log.trace("resultsToQueryIterator RETURNING bmap: {}", bmap) ;
-            return bmap;
+            return bmap.build();
         } ;
         
         Iterator<Binding> bIter = Iter.map(results.iterator(), converter);
-        QueryIterator qIter = new QueryIterPlainWrapper(bIter, execCxt);
+        QueryIterator qIter = QueryIterPlainWrapper.create(bIter, execCxt);
         return qIter ;
     }
 

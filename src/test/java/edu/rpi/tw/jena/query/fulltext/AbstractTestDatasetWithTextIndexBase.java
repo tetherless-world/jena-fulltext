@@ -46,13 +46,13 @@ public abstract class AbstractTestDatasetWithTextIndexBase {
     protected static final String RESOURCE_BASE = "http://example.org/data/resource/";
     protected static final String QUERY_PROLOG = 
             StrUtils.strjoinNL(
-                "PREFIX text: <http://jena.apache.org/text#>",
+                "PREFIX text: <http://jena.apache.org/fulltext#>",
                 "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>"
                 );
     
     protected static final String TURTLE_PROLOG = 
                 StrUtils.strjoinNL(
-                        "@prefix text: <http://jena.apache.org/text#> .",
+                        "@prefix text: <http://jena.apache.org/fulltext#> .",
                         "@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> ."
                         );
     

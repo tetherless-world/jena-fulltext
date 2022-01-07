@@ -315,7 +315,7 @@ public class TextIndexLucene implements TextIndex {
                 throw ex; // the original behavior
             }
         }
-        log.trace("added: {}", doc) ;
+        log.debug("added: {}", doc) ;
     }
 
     @Override

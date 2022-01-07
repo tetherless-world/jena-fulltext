@@ -24,7 +24,7 @@ import org.apache.jena.tdb.assembler.Vocab ;
 
 public class TextVocab
 {
-    public static final String NS                   =  "http://jena.apache.org/text#" ;
+    public static final String NS                   =  "http://jena.apache.org/fulltext#" ;
     
     public static final String pfQuery              =  NS+"search" ;
 

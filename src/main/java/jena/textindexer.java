@@ -29,21 +29,20 @@ import org.apache.jena.sparql.core.Quad ;
 import org.apache.jena.vocabulary.XSD;
 import org.slf4j.Logger ;
 import org.slf4j.LoggerFactory ;
-import jena.cmd.ArgDecl ;
-import jena.cmd.CmdException ;
-import arq.cmdline.CmdARQ ;
+import org.apache.jena.cmd.ArgDecl ;
+import org.apache.jena.cmd.CmdException ;
 import edu.rpi.tw.jena.query.fulltext.*;
 
 /**
  * Text indexer application that will read a dataset and index its triples in
  * its text index.
  */
-public class textindexer extends CmdARQ {
+public class textindexer extends arq.cmdline.CmdARQ {
 
     private static Logger      log          = LoggerFactory.getLogger(textindexer.class) ;
 
     public static final ArgDecl assemblerDescDecl = new ArgDecl(ArgDecl.HasValue, "desc", "dataset") ;
-    
+
     protected DatasetGraphText dataset      = null ;
     protected TextIndex        textIndex    = null ;
     protected EntityDefinition entityDefinition ;
@@ -69,22 +68,22 @@ public class textindexer extends CmdARQ {
         // Two forms : with and without arg.
         // Maximises similarity with other tools.
         String file ;
-        
+
         if ( ! super.contains(assemblerDescDecl) && getNumPositional() == 0 )
             throw new CmdException("No assembler description given") ;
-        
+
         if ( super.contains(assemblerDescDecl) ) {
             if ( getValues(assemblerDescDecl).size() != 1 )
                 throw new CmdException("Multiple assembler descriptions given via --desc") ;
             if ( getPositional().size() != 0 )
-                throw new CmdException("Additional assembler descriptions given") ; 
+                throw new CmdException("Additional assembler descriptions given") ;
             file = getValue(assemblerDescDecl) ;
         } else {
             if ( getNumPositional() != 1 )
                 throw new CmdException("Multiple assembler descriptions given as positional arguments") ;
             file = getPositionalArg(0) ;
         }
-        
+
         if (file == null)
             throw new CmdException("No dataset specified") ;
         // Assumes a single test dataset description in the assembler file.
@@ -113,8 +112,8 @@ public class textindexer extends CmdARQ {
             if (dataset.supportsTransactions()) {
                 dataset.begin(ReadWrite.READ);
             }
-            
-    
+
+
             Iterator<Quad> quadIter = dataset.find( Node.ANY, Node.ANY, Node.ANY, Node.ANY );
             for (; quadIter.hasNext(); )
             {
@@ -132,15 +131,15 @@ public class textindexer extends CmdARQ {
                     progressMonitor.progressByOne();
                 }
             }
-            
+
             textIndex.commit();
             textIndex.close();
-            
+
             if (dataset.supportsTransactions()) {
                 dataset.commit();
             }
             dataset.close();
-            
+
             progressMonitor.close() ;
         } finally {
             if (dataset.supportsTransactions()) {

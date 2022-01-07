@@ -62,7 +62,7 @@ public class TestTextMultilingualEnhancements02 extends AbstractTestDatasetWithT
             StrUtils.strjoinNL(
                     "@prefix  res:  <" + RES_BASE + "> .",
                     "@prefix  spec: <" + SPEC_BASE + "> .",
-                    "@prefix text: <http://jena.apache.org/text#> .",
+                    "@prefix text: <http://jena.apache.org/fulltext#> .",
                     "@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .",
                     "@prefix skos: <http://www.w3.org/2004/02/skos/core#> ."
                     );    
@@ -70,7 +70,7 @@ public class TestTextMultilingualEnhancements02 extends AbstractTestDatasetWithT
             StrUtils.strjoinNL(
                     "prefix res:  <" + RES_BASE + "> ",
                     "prefix spec: <" + SPEC_BASE + "> ",
-                    "prefix text: <http://jena.apache.org/text#> ",
+                    "prefix text: <http://jena.apache.org/fulltext#> ",
                     "prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> ",
                     "prefix skos: <http://www.w3.org/2004/02/skos/core#> "
                     );
@@ -80,7 +80,7 @@ public class TestTextMultilingualEnhancements02 extends AbstractTestDatasetWithT
                     "prefix skos: <http://www.w3.org/2004/02/skos/core#> ",
                     "prefix ja:   <http://jena.hpl.hp.com/2005/11/Assembler#> ",
                     "prefix tdb:  <http://jena.hpl.hp.com/2008/tdb#>",
-                    "prefix text: <http://jena.apache.org/text#>",
+                    "prefix text: <http://jena.apache.org/fulltext#>",
                     "prefix spec:     <" + SPEC_BASE + ">",
                     "",
                     "[] ja:loadClass    \"edu.rpi.tw.jena.query.fulltext.TextQuery\" .",
